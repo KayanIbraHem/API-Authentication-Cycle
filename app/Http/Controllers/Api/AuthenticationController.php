@@ -11,54 +11,40 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\Api\UserResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\Api\Authentication\LoginRequest;
+use App\Http\Requests\Api\Authentication\RegisterRequest;
+use App\Http\Requests\Api\Authentication\ChangePasswordRequest;
 
 class AuthenticationController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $validateUser = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password',
-        ]);
-        if ($validateUser->fails()) {
-            return response()->json([
-                'message' => 'Error',
-                'errors' => $validateUser->errors()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
+        $validated = $request->validated();
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'password' => Hash::make($validated['password']),
+            'phone_verification_code' => 1111,
         ]);
         return response()->json([
             'message' => 'User Created successfully,please verify phone number',
         ], Response::HTTP_CREATED);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $validateLogin = Validator::make($request->all(), [
-            'email' => 'email',
-            'email_or_phone' => 'required',
-            'password' => 'required',
-            'device_name' => 'required',
-        ]);
-        if ($validateLogin->fails()) {
-            return response()->json([
-                'message' => 'Error',
-                'errors' => $validateLogin->errors()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $validated = $request->validated();
         $credentials = $request->only('email_or_phone', 'password');
         $field = filter_var($credentials['email_or_phone'], FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
         $user = User::where($field, $credentials['email_or_phone'])->first();
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        //Another way
+        // $user = User::where(function ($query) use ($validated) {
+        //     $query->where('email', $validated['email_or_phone'])
+        //         ->orWhere('phone', $validated['email_or_phone']);
+        // })->first();
+
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'error' => 'invalid data',
             ]);
@@ -66,30 +52,20 @@ class AuthenticationController extends Controller
         if ($user->is_verify !== 1) {
             return response()->json([
                 'error' => 'please verfiy phone number first!',
-            ],Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return response()->json([
             'message' => 'Loged in successfully',
-            'token' => $user->createToken($request->device_name)->plainTextToken,
+            'token' => $user->createToken($user->name)->plainTextToken,
             'user' => new UserResource($user),
         ], Response::HTTP_OK);
     }
 
-    public function changePassword(Request $request)
+    public function changePassword(ChangePasswordRequest $request)
     {
-        $request->validate([
-            'password' => 'required',
-            'new_password' => 'required',
-            'new_confirm_password' => 'same:new_password',
-        ]);
-        if (!Hash::check($request->password, auth()->user()->password)) {
-            return response()->json([
-                'message' => 'Error',
-                'errors' => 'The current password is incorrect'
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-        User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
+        $validated = $request->validated();
+        User::find(auth()->user()->id)->update(['password' => Hash::make($validated['new_password'])]);
         return response()->json([
             'success' => 'Password has been changed successfully',
         ], Response::HTTP_OK);

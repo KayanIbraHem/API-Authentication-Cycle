@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ResetPasswordController;
 use App\Http\Controllers\Api\AuthenticationController;
+use App\Http\Controllers\Api\ForgotPasswordController;
 use App\Http\Controllers\Api\VerifyPhoneNumberController;
 
 /*
@@ -29,3 +31,7 @@ Route::post('auth/logout', [AuthenticationController::class, 'logout']);
 Route::post('auth/changpassword', [AuthenticationController::class, 'changePassword'])->middleware('auth:sanctum');
 
 Route::post('user/verfiy-phone-number', [VerifyPhoneNumberController::class, 'verify']);
+
+Route::post('user/forgot-password',[ForgotPasswordController::class,'forgotPassword']);
+
+Route::post('user/reset-password',[ResetPasswordController::class,'resetPassword']);

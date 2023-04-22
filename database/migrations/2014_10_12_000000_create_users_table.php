@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone');
             $table->string('phone_verification_code')->nullable();
+            $table->string('reset_password_code')->nullable();
             $table->integer('is_verify')->default(0);
             $table->rememberToken();
             $table->timestamps();

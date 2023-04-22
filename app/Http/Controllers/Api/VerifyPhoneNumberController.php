@@ -29,10 +29,11 @@ class VerifyPhoneNumberController extends Controller
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
         $user->is_verify = 1;
+        $user->phone_verification_code = null;
         $user->save();
         return response()->json([
             'message' => 'Phone number verified successfully.',
-            'token' => $user->createToken($user->name)->plainTextToken,
+            'token' => $user->createToken('*')->plainTextToken,
             'user' => new UserResource($user),
         ], Response::HTTP_CREATED);
     }
