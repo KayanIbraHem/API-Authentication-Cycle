@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\SubSubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,14 +26,24 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::get('/', [AdminController::class, 'index'])->name('admin.index');
         Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
         Route::post('/create', [AdminController::class, 'store'])->name('admin.store');
-        Route::delete('/{id}', [AdminController::class, 'delete'])->name('admin.delete');
+        Route::delete('/{id}/delete', [AdminController::class, 'delete'])->name('admin.delete');
         Route::get('/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
         Route::post('/{id}/update', [AdminController::class, 'update'])->name('admin.update');
     });
-
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('category.index');
         Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+        Route::post('/create', [CategoryController::class, 'store'])->name('category.store');
+        Route::delete('/{id}', [CategoryController::class, 'delete'])->name('category.delete');
+        Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::post('/{id}/update', [CategoryController::class, 'update'])->name('category.update');
+
+        Route::get('/subsubcategory', [SubSubCategoryController::class, 'index'])->name('category.subsub.index');
+        Route::get('subsubcategory/create', [SubSubCategoryController::class, 'create'])->name('category.subsub.create');
+        Route::post('subsubcategory/create', [SubSubCategoryController::class, 'store'])->name('category.subsub.store');
+        Route::delete('subsubcategory/{id}', [SubSubCategoryController::class, 'delete'])->name('category.subsub.delete');
+        Route::get('subsubcategory/{id}/edit', [SubSubCategoryController::class, 'edit'])->name('category.subsub.edit');
+        Route::post('subsubcategory/{id}/update', [SubSubCategoryController::class, 'update'])->name('category.subsub.update');
     });
 });
 

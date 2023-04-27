@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Helpers\UploadFiles;
 use App\Models\Admin;
-use Illuminate\Support\Str;
+use App\Helpers\UploadFiles;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\Dashboard\AdminRequest;
+use App\Http\Requests\Dashboard\Admin\AdminStoreRequest;
+use App\Http\Requests\Dashboard\Admin\AdminUpdateRequest;
+
 
 class AdminController extends Controller
 {
@@ -36,35 +35,36 @@ class AdminController extends Controller
         return view('Dashboard.admins.edit', compact('admin'));
     }
 
-    public function store(AdminRequest $request)
+    public function store(AdminStoreRequest $request)
     {
         $data = $request->except(['_token', 'password', 'hidden']);
         $data['password'] = Hash::make($request->password);
         $admin = Admin::create($data);
         if ($request->hasfile('image')) {
-            $admin['image'] = 'images/' . UploadFiles::uploadimage($request['image']);
+            $admin['image'] = 'images/' . UploadFiles::uploadImage($request['image']);
             $admin->update();
         }
         return redirect()->route('admin.create');
     }
 
-    public function update(Request $request, $id)
+    public function update(AdminUpdateRequest $request, $id)
     {
         $admin = Admin::find($id);
         $data = $request->except(['_token', 'password', 'hidden']);
-        if ($admin->password != $request->password) {
+        if ( $request->password!='') {
             $data['password'] = Hash::make($request->password);
         }
         if ($request->hasfile('image')) {
             if ($admin->image != '') {
                 unlink(public_path($admin->image));
             }
-            $data['image'] = 'images/' . UploadFiles::uploadimage($request['image']);
+            $data['image'] = 'images/' . UploadFiles::uploadImage($request['image']);
         }
         $admin->update($data);
 
         return redirect()->route('admin.index');
     }
+
     public function delete($id)
     {
         $admin = Admin::find($id);

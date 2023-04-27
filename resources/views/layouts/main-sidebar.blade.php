@@ -32,8 +32,8 @@
                                     <div class="clearfix"></div>
                                 </a>
                                 <ul id="login" class="collapse">
-                                    <li> <a href="#">القسم الفرعي</a> </li>
-                                    <li> <a href="#">الاقسام الفرعية للقسم الفرعي</a> </li>
+                                    <li> <a href="{{ route('category.subsub.create') }}">اضافة قسم فرعي</a> </li>
+                                    <li> <a href="{{ route('category.subsub.index') }}">الاقسام الفرعية للقسم الفرعي</a> </li>
                                 </ul>
                             </li>
                     </li>

@@ -2,7 +2,7 @@
 @section('css')
 
 @section('title')
-    اضافة مسؤل
+    تعديل القسم
 @stop
 @endsection
 @section('page-header')
@@ -10,12 +10,12 @@
 <div class="page-title">
     <div class="row">
         <div class="col-sm-6">
-            <h4 class="mb-0">اضافة مسؤل</h4>
+            <h4 class="mb-0">تعديل القسم</h4>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb pt-0 pr-0 float-left float-sm-right ">
                 <li class="breadcrumb-item"><a href="#" class="default-color">الرئيسية</a></li>
-                <li class="breadcrumb-item active">اضافة مسؤل</li>
+                <li class="breadcrumb-item active">تعديل القسم</li>
             </ol>
         </div>
     </div>
@@ -37,33 +37,27 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('category.update',['id'=>$category->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+
                     <div class="form-group">
                         <label for="exampleInputEmail1">الاسم</label>
-                        <input type="text" name='name' value="{{ old('name') }}" class="form-control"
-                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <input type="text" name='name' value="{{$category->name  }}" class="form-control">
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">البريد الالكتروني</label>
-                        <input type="email" name="email" value="{{ old('email') }}" class="form-control"
-                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label for="exampleFormControlSelect1" class="mb-1">حدد القسم الفرعي</label>
+                        <select name="parent_id" id="exampleFormControlSelect1" class="form-control">
+                            @foreach ($categories as $category)
+                                @foreach ($category->subcategories as $subcategory)
+                                    <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                                @endforeach
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputPassword1">كلمة المرور</label>
-                        <input type="password" name="password" class="form-control" id="exampleInputPassword1">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">رقم الهاتف</label>
-                        <input type="text" name="phone" value="{{ old('phone') }}" class="form-control"
-                            id="exampleInputPassword1">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">الصورة الشخصيه</label>
+                        <label for="exampleInputEmail1">الصورة</label>
                         <input type="file" name="image" class="form-control dropify">
                     </div>
                     <button type="submit" class="btn btn-primary">تأكيد</button>
@@ -71,8 +65,7 @@
             </div>
         </div>
     </div>
-</div>
-<!-- row closed -->
+    <!-- row closed -->
 @endsection
 @section('js')
 

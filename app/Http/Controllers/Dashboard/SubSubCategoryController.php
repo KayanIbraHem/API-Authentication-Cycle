@@ -7,24 +7,19 @@ use App\Helpers\UploadFiles;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Dashboard\Category\CategoryStoreRequest;
-use App\Http\Requests\Dashboard\Category\CategoryUpdateRequest;
 
-class CategoryController extends Controller
+class SubSubCategoryController extends Controller
 {
-
     public function index()
     {
-        $mainCategories = Category::all();
-        
-        return view('Dashboard.categories.index', compact('mainCategories'));
+        $subsubcategories = Category::all();
+        return view('Dashboard.categories.sbusubcategory.index', compact('subsubcategories'));
     }
-
     public function create()
     {
         $mainCategories = Category::where('parent_id', 0)->get();
-        return view('Dashboard.categories.create', compact('mainCategories'));
+        return view('Dashboard.categories.sbusubcategory.create', compact('mainCategories'));
     }
 
     public function store(CategoryStoreRequest $request)
@@ -34,28 +29,14 @@ class CategoryController extends Controller
             $category['image'] = 'category/' . $category->id . '/' . UploadFiles::uploadImageWithFolder($request['image'], $category->id, 'category/');
             $category->update();
         }
-        return redirect()->route('category.create');
+        return redirect()->route('category.subsub.create');
     }
 
     public function edit($id)
     {
-        $mainCategories = Category::where('parent_id', 0)->get();
-        $category = Category::where('id', $id)->withCount('subcategories')->firstorfail();
-        return view('Dashboard.categories.edit', compact('category', 'mainCategories'));
-    }
-
-    public function update(CategoryUpdateRequest $request, $id)
-    {
-        $category = Category::find($id);
-        $data = $request->except('_token');
-        if ($request->hasFile('image')) {
-            if ($category->image != '') {
-                File::deleteDirectory(public_path('category/' . $category->id),);
-            }
-            $data['image'] = 'category/' . $category->id . '/' . UploadFiles::uploadImageWithFolder($request['image'], $category->id, 'category/');
-        }
-        $category->update($data);
-        return redirect()->route('category.index');
+        $categories = Category::where('parent_id', 0)->get();
+        $category = Category::where('id', $id)->firstorfail();
+        return view('Dashboard.categories.sbusubcategory.edit', compact('category', 'categories'));
     }
 
     public function delete($id)

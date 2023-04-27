@@ -55,7 +55,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::guard('admin')->attempt($request->only(['email', 'password']), $request->get('remember'))) {
-            return redirect()->route('admin.index');
+            return redirect()->route('admin.dashboard');
         }
         return back()->withInput($request->only('email', 'remember'));
     }

@@ -40,7 +40,6 @@
 
                 <form action="{{ route('admin.update',['id'=>$admin->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-
                     <div class="form-group">
                         <label for="exampleInputEmail1">الاسم</label>
                         <input type="text" name='name' value="{{$admin->name}}" class="form-control" id="exampleInputEmail1"
@@ -55,7 +54,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">كلمة المرور</label>
-                        <input type="text" name="password" value="{{$admin->password}}" class="form-control" id="exampleInputPassword1">
+                        <input type="password" name="password" value="{{$admin->password}}" class="form-control" id="exampleInputPassword1">
                     </div>
 
                     <div class="form-group">
