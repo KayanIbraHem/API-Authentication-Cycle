@@ -13,19 +13,19 @@
                             <div class="clearfix"></div>
                         </a>
                     </li>
-                    <!-- menu title -->
+                    <!--categories -->
                     <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">الأقسام</li>
-                    <!-- menu item Elements-->
+                    <!-- categories Elements-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#elements">
-                            <div class="pull-left"><i class="ti-palette"></i><span class="right-nav-text">الاقسام</span>
+                            <div class="pull-left"><i class="ti-view-grid text-danger"></i><span class="right-nav-text">الاقسام</span>
                             </div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
                         </a>
                         <ul id="elements" class="collapse" data-parent="#sidebarnav">
                             <li><a href="{{ route('category.create') }}">اضافة قسم</a></li>
-                            <li><a href="{{ route('category.index') }}">قائمة الاقسام الرئيسية</a></li>
+                            <li><a href="{{ route('category.index') }}">قائمة الاقسام </a></li>
                             <li>
                                 <a href="javascript:void(0);" data-toggle="collapse" data-target="#login"> الاقسام
                                     الفرعية<div class="pull-right"><i class="ti-plus"></i></div>
@@ -39,10 +39,23 @@
                     </li>
                 </ul>
                 </li>
-                <!-- menu item calendar-->
+                 <!-- products -->
+                 <li>
+                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#chart">
+                        <div class="pull-left"><i class="ti-package text-primary"></i><span class="right-nav-text">المنتجات</span>
+                        </div>
+                        <div class="pull-right"><i class="ti-plus"></i></div>
+                        <div class="clearfix"></div>
+                    </a>
+                    <ul id="chart" class="collapse" data-parent="#sidebarnav">
+                        <li> <a href="{{route('product.create')}}">اضافة منتج</a> </li>
+                        <li> <a href="{{route('product.index')}}">قائمة المنتجات</a> </li>
+                    </ul>
+                </li>
+                <!-- admins-->
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#calendar-menu">
-                        <div class="pull-left"><i class="ti-calendar"></i><span class="right-nav-text">المسؤلين</span>
+                        <div class="pull-left"><i class="ti-shield text-success"></i><span class="right-nav-text">المسؤلين</span>
                         </div>
                         <div class="pull-right"><i class="ti-plus"></i></div>
                         <div class="clearfix"></div>
@@ -67,21 +80,6 @@
                     <a href="mail-box.html"><i class="ti-email"></i><span class="right-nav-text">Mail
                             box</span> <span class="badge badge-pill badge-warning float-right mt-1">HOT</span> </a>
                 </li>
-                <!-- menu item Charts-->
-                <li>
-                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#chart">
-                        <div class="pull-left"><i class="ti-pie-chart"></i><span class="right-nav-text">Charts</span>
-                        </div>
-                        <div class="pull-right"><i class="ti-plus"></i></div>
-                        <div class="clearfix"></div>
-                    </a>
-                    <ul id="chart" class="collapse" data-parent="#sidebarnav">
-                        <li> <a href="chart-js.html">Chart.js</a> </li>
-                        <li> <a href="chart-morris.html">Chart morris </a> </li>
-                        <li> <a href="chart-sparkline.html">Chart Sparkline</a> </li>
-                    </ul>
-                </li>
-
                 <!-- menu font icon-->
                 <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#font-icon">

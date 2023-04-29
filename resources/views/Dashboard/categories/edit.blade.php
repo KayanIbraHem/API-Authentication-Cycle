@@ -37,27 +37,33 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('category.update',['id'=>$category->id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('category.update', ['id' => $category->id]) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">الاسم</label>
                         <input type="text" name='name' value="{{ $category->name }}" class="form-control">
                     </div>
-                    @if($category->subcategories_count <1)
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1" class="mb-1">القسم الرئيسي</label>
-                        <select name="parent_id" id="exampleFormControlSelect1" class="form-control">
-                            <option value="0" {{$category->parent_id==0?"selected":''}}>قسم رئيسي</option>
-                            @foreach ($mainCategories as $cat)
-                                <option value="{{ $cat->id }}" {{$cat->id==$category->parent_id ?"selected":''}}>{{ $cat->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @if ($category->subcategories_count < 1)
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1" class="mb-1">القسم الرئيسي</label>
+                            <select name="parent_id" id="exampleFormControlSelect1" class="form-control">
+                                <option value="0" {{ $category->parent_id == 0 ? 'selected' : '' }}>قسم رئيسي</option>
+                                @foreach ($mainCategories as $cat)
+                                    @if ($cat->id != $category->id)
+                                        <option value="{{ $cat->id }}"
+                                            {{ $cat->id == $category->parent_id ? 'selected' : '' }}>{{ $cat->name }}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
                     @endif
                     <div class="form-group">
                         <label for="exampleInputEmail1">الصورة</label>
-                        <input type="file" name="image"  data-default-file="{{asset($category->image)}}" class="form-control dropify" required>
+                        <input type="file" name="image" data-default-file="{{ asset($category->image) }}"
+                            class="form-control dropify" required>
                     </div>
                     <button type="submit" class="btn btn-primary">تأكيد</button>
                 </form>

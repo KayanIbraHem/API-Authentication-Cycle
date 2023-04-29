@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\Dashboard\Category\CategoryStoreRequest;
+use App\Http\Requests\Dashboard\Category\CategoryUpdateRequest;
 
 class SubSubCategoryController extends Controller
 {
@@ -35,8 +36,22 @@ class SubSubCategoryController extends Controller
     public function edit($id)
     {
         $categories = Category::where('parent_id', 0)->get();
-        $category = Category::where('id', $id)->firstorfail();
-        return view('Dashboard.categories.sbusubcategory.edit', compact('category', 'categories'));
+        $subSubCat = Category::where('id', $id)->firstorfail();
+        return view('Dashboard.categories.sbusubcategory.edit', compact('subSubCat', 'categories'));
+    }
+
+    public function update(CategoryUpdateRequest $request, $id)
+    {
+        $subSubCat = Category::find($id);
+        $data = $request->except('_token');
+        if ($request->hasFile('image')) {
+            if ($subSubCat->image != '') {
+                File::deleteDirectory(public_path('category/' . $subSubCat->id),);
+            }
+            $data['image'] = 'category/' . $subSubCat->id . '/' . UploadFiles::uploadImageWithFolder($request['image'], $subSubCat->id, 'category/');
+        }
+        $subSubCat->update($data);
+        return redirect()->route('category.subsub.index');
     }
 
     public function delete($id)

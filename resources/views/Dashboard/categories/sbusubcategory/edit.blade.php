@@ -2,7 +2,7 @@
 @section('css')
 
 @section('title')
-    تعديل القسم
+    تعديل القسم الفرعي
 @stop
 @endsection
 @section('page-header')
@@ -10,12 +10,12 @@
 <div class="page-title">
     <div class="row">
         <div class="col-sm-6">
-            <h4 class="mb-0">تعديل القسم</h4>
+            <h4 class="mb-0">تعديل القسم الفرعي</h4>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb pt-0 pr-0 float-left float-sm-right ">
                 <li class="breadcrumb-item"><a href="#" class="default-color">الرئيسية</a></li>
-                <li class="breadcrumb-item active">تعديل القسم</li>
+                <li class="breadcrumb-item active">تعديل القسم الفرعي</li>
             </ol>
         </div>
     </div>
@@ -37,12 +37,12 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('category.update',['id'=>$category->id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('category.subsub.update',['id'=>$subSubCat->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">الاسم</label>
-                        <input type="text" name='name' value="{{$category->name  }}" class="form-control">
+                        <input type="text" name='name' value="{{$subSubCat->name  }}" class="form-control">
                     </div>
 
                     <div class="form-group">
@@ -50,7 +50,7 @@
                         <select name="parent_id" id="exampleFormControlSelect1" class="form-control">
                             @foreach ($categories as $category)
                                 @foreach ($category->subcategories as $subcategory)
-                                    <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                                    <option value="{{ $subcategory->id }}" {{$subcategory->id==$subSubCat->parent_id?"selected":''}}>{{ $subcategory->name }}</option>
                                 @endforeach
                             @endforeach
                         </select>
@@ -58,7 +58,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">الصورة</label>
-                        <input type="file" name="image" class="form-control dropify">
+                        <input type="file" name="image" data-default-file="{{asset($subSubCat->image)}}" class="form-control dropify">
                     </div>
                     <button type="submit" class="btn btn-primary">تأكيد</button>
                 </form>

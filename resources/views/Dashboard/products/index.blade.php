@@ -2,7 +2,7 @@
 @section('css')
 
 @section('title')
-    قائمة الاقسام الرئيسية
+    قائمة المنتاج
 @stop
 @endsection
 @section('page-header')
@@ -10,12 +10,12 @@
 <div class="page-title">
     <div class="row">
         <div class="col-sm-6">
-            <h4 class="mb-0">قائمة الاقسام الرئيسية</h4>
+            <h4 class="mb-0"> قائمة المنتاج</h4>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb pt-0 pr-0 float-left float-sm-right ">
                 <li class="breadcrumb-item"><a href="#" class="default-color">الرئيسية</a></li>
-                <li class="breadcrumb-item active">قائمة الاقسام الرئيسية</li>
+                <li class="breadcrumb-item active">قائمة المنتاج</li>
             </ol>
         </div>
     </div>
@@ -34,33 +34,39 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">الاسم</th>
-                            <th scope="col">الصورة</th>
                             <th scope="col">القسم الرئيسي</th>
+                            <th scope="col">الحجم</th>
+                            <th scope="col">السعر</th>
+                            <th scope="col">الصورة</th>
+                            <th scope="col">الوصصف</th>
                             <th scope="col">العمليات</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($mainCategories as $category)
+                        @foreach ($products as $product)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $category->name }}</td>
-                                <td><img src=" {{ asset($category->image) }}"  width="100px" height="100px"></td>
-                                <td>{{ $category->parent?$category->parent->name:'قسم رئيسي' }}</td>
-
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->maincat_id?$product->category->name:'لايوجد' }}</td>
+                                <td>{{ $product->size_id?$product->size->name:'لايوجد' }}</td>
+                                <td>{{ $product->price?$product->price->price:'لايوجد'}}</td>
+                                <td><img src=" {{ asset($product->image) }}" width="100px" height="100px"></td>
+                                <td>{{ $product->description }}</td>
                                 <td>
                                     <a class="btn btn-info btn-sm edit"
-                                        href="{{ route('category.edit', ['id' => $category->id]) }}" title="تعديل"><i
+                                        href="{{ route('product.edit', ['id' => $product->id]) }}" title="تعديل"><i
                                             class="fa fa-edit"></i></a>
                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                        data-target="#category{{ $category->id }}" title="حذف">
+                                        data-target="#product{{ $product->id }}" title="حذف">
                                         <i style="color: White" class="fa fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>
-                            <div class="modal fade" id="category{{ $category->id }}" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="product{{ $product->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
-                                    <form action="{{ route('category.delete', ['id' => $category->id]) }}" method="post">
+                                    <form action="{{ route('product.delete', ['id' => $product->id]) }}"
+                                        method="post">
                                         @csrf
                                         @method('DELETE')
                                         <div class="modal-content">

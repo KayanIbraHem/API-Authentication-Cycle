@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\SubSubCategoryController;
 
 /*
@@ -44,6 +45,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::delete('subsubcategory/{id}', [SubSubCategoryController::class, 'delete'])->name('category.subsub.delete');
         Route::get('subsubcategory/{id}/edit', [SubSubCategoryController::class, 'edit'])->name('category.subsub.edit');
         Route::post('subsubcategory/{id}/update', [SubSubCategoryController::class, 'update'])->name('category.subsub.update');
+    });
+    Route::group(['prefix' => 'products'], function () {
+        Route::get('/', [ProductController::class, 'index'])->name('product.index');
+        Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+        Route::post('/create', [ProductController::class, 'store'])->name('product.store');
+        Route::delete('/{id}/delete', [ProductController::class, 'delete'])->name('product.delete');
+        Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
+        Route::post('/{id}/update', [ProductController::class, 'update'])->name('product.update');
     });
 });
 

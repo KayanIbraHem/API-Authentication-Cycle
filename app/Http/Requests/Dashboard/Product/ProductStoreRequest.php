@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Dashboard\Category;
+namespace App\Http\Requests\Dashboard\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryStoreRequest extends FormRequest
+class ProductStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,14 @@ class CategoryStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:1|max:30|unique:categories,name',
+            'name' => 'required|string|min:1|max:30|unique:products,name',
+            'maincat_id' => 'required',
+            'subcat_id' => 'required',
+            'subsub_cat' => 'required',
+            'size_id' => 'required',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
-            'parent_id'=>'required',
+            'description' => 'required|min:1|max:200',
+
         ];
     }
 
@@ -36,13 +41,21 @@ class CategoryStoreRequest extends FormRequest
             'name.max' => 'يجب الا يزيد الاسم عن 20 حرف',
             'name.unique' => 'الاسم موجود بالفعل',
 
+            'maincat_id.required' => 'القسم  مطلوب',
+            'subcat_id.required' => 'القسم الرئيسي الفرعي مطلوب',
+            'subsub_cat.required' => 'القسم الفرعي مطلوب',
+            'size_id.required' => 'الحجم مطلوب',
+
             'image.required' => 'الصورة مطلوبة',
             'image.image' => 'الصورة مطلوبة',
             'image.mimes' => 'هذا الامتداد غير مدعوم',
             'image.max' => 'حجم الصورة كبير',
 
-            'parent_id.required'=>'القسم التابع مطلوب'
-        ];
 
+
+            'description.required' => 'الوصف مطلوب',
+            'description.min' => 'يجب الا يقل الوصف عن حرف',
+            'description.max' => 'يجب الا يزيد الاسم عن 200 حرف',
+        ];
     }
 }
