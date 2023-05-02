@@ -18,7 +18,8 @@
                     <!-- categories Elements-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#elements">
-                            <div class="pull-left"><i class="ti-view-grid text-danger"></i><span class="right-nav-text">الاقسام</span>
+                            <div class="pull-left"><i class="ti-view-grid text-warning"></i><span
+                                    class="right-nav-text">الاقسام</span>
                             </div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
                             <div class="clearfix"></div>
@@ -33,44 +34,64 @@
                                 </a>
                                 <ul id="login" class="collapse">
                                     <li> <a href="{{ route('category.subsub.create') }}">اضافة قسم فرعي</a> </li>
-                                    <li> <a href="{{ route('category.subsub.index') }}">الاقسام الفرعية للقسم الفرعي</a> </li>
+                                    <li> <a href="{{ route('category.subsub.index') }}">الاقسام الفرعية للقسم الفرعي</a>
+                                    </li>
                                 </ul>
                             </li>
                     </li>
                 </ul>
                 </li>
-                 <!-- products -->
-                 <li>
+                <!-- products -->
+                <li>
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#chart">
-                        <div class="pull-left"><i class="ti-package text-primary"></i><span class="right-nav-text">المنتجات</span>
+                        <div class="pull-left"><i class="ti-package text-primary"></i><span
+                                class="right-nav-text">المنتجات</span>
                         </div>
                         <div class="pull-right"><i class="ti-plus"></i></div>
                         <div class="clearfix"></div>
                     </a>
                     <ul id="chart" class="collapse" data-parent="#sidebarnav">
-                        <li> <a href="{{route('product.create')}}">اضافة منتج</a> </li>
-                        <li> <a href="{{route('product.index')}}">قائمة المنتجات</a> </li>
+                        @can('product-create')
+                            <li> <a href="{{ route('product.create') }}">اضافة منتج</a> </li>
+                        @endcan
+                        @can('product-list')
+                            <li> <a href="{{ route('product.index') }}">قائمة المنتجات</a> </li>
+                        @endcan
                     </ul>
                 </li>
-                <!-- admins-->
-                <li>
-                    <a href="javascript:void(0);" data-toggle="collapse" data-target="#calendar-menu">
-                        <div class="pull-left"><i class="ti-shield text-success"></i><span class="right-nav-text">المسؤلين</span>
-                        </div>
-                        <div class="pull-right"><i class="ti-plus"></i></div>
-                        <div class="clearfix"></div>
-                    </a>
-                    <ul id="calendar-menu" class="collapse" data-parent="#sidebarnav">
-                        <li> <a href="{{route('admin.create')}}">اضافة مسؤل</a> </li>
-                        <li> <a href="{{route('admin.index')}}">قائمة المسؤلين</a> </li>
-                    </ul>
-                </li>
-                <!-- menu item todo-->
-                <li>
-                    <a href="todo-list.html"><i class="ti-menu-alt"></i><span class="right-nav-text">Todo
-                            list</span> </a>
-                </li>
-                <!-- menu item chat-->
+                @can('role-list')
+                    <!-- admins-->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#calendar-menu">
+                            <div class="pull-left"><i class="ti-shield text-success"></i><span
+                                    class="right-nav-text">المسؤلين</span>
+                            </div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="calendar-menu" class="collapse" data-parent="#sidebarnav">
+                            {{-- @can('role-list') --}}
+                            <li> <a href="{{ route('admin.create') }}">اضافة مسؤل</a> </li>
+                            {{-- @endcan --}}
+                            <li> <a href="{{ route('admin.index') }}">قائمة المسؤلين</a> </li>
+                        </ul>
+                    </li>
+                    <!-- roles-->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#roles-menu">
+                            <div class="pull-left"><i class="ti-lock text-danger"></i><span
+                                    class="right-nav-text">الصلاحيات</span>
+                            </div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="roles-menu" class="collapse" data-parent="#sidebarnav">
+                            <li> <a href="{{ route('roles.index') }}">قائمة الأدوار</a> </li>
+                            {{-- <li> <a href="{{route('admin.index')}}">قائمة </a> </li> --}}
+                        </ul>
+                    </li>
+                @endcan
+                {{-- <!-- menu item chat-->
                 <li>
                     <a href="chat-page.html"><i class="ti-comments"></i><span class="right-nav-text">Chat
                         </span></a>
@@ -230,7 +251,7 @@
                         </li>
                     </ul>
                 </li>
-                </ul>
+                </ul> --}}
             </div>
         </div>
 

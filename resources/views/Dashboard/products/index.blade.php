@@ -2,7 +2,7 @@
 @section('css')
 
 @section('title')
-    قائمة المنتاج
+    قائمة المنتجات
 @stop
 @endsection
 @section('page-header')
@@ -10,12 +10,12 @@
 <div class="page-title">
     <div class="row">
         <div class="col-sm-6">
-            <h4 class="mb-0"> قائمة المنتاج</h4>
+            <h4 class="mb-0"> قائمة المنتجات</h4>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb pt-0 pr-0 float-left float-sm-right ">
                 <li class="breadcrumb-item"><a href="#" class="default-color">الرئيسية</a></li>
-                <li class="breadcrumb-item active">قائمة المنتاج</li>
+                <li class="breadcrumb-item active">قائمة المنتجات</li>
             </ol>
         </div>
     </div>
@@ -47,20 +47,27 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $product->name }}</td>
-                                <td>{{ $product->maincat_id?$product->category->name:'لايوجد' }}</td>
-                                <td>{{ $product->size_id?$product->size->name:'لايوجد' }}</td>
-                                <td>{{ $product->price?$product->price->price:'لايوجد'}}</td>
+                                <td>{{ $product->category->name }}</td>
+                                <td>{{ $product->size->name }}</td>
+                                <td>{{ $product->size->price }}</td>
                                 <td><img src=" {{ asset($product->image) }}" width="100px" height="100px"></td>
                                 <td>{{ $product->description }}</td>
                                 <td>
-                                    <a class="btn btn-info btn-sm edit"
-                                        href="{{ route('product.edit', ['id' => $product->id]) }}" title="تعديل"><i
-                                            class="fa fa-edit"></i></a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                        data-target="#product{{ $product->id }}" title="حذف">
-                                        <i style="color: White" class="fa fa-trash"></i>
-                                    </button>
+                                    @can('product-edit')
+                                        <a class="btn btn-info btn-sm edit"
+                                            href="{{ route('product.edit', ['id' => $product->id]) }}" title="تعديل"><i
+                                                class="fa fa-edit"></i></a>
+                                    @endcan
+                                    @can('product-delete')
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                            data-target="#product{{ $product->id }}" title="حذف">
+                                            <i style="color: White" class="fa fa-trash"></i>
+                                        </button>
+                                    @endcan
+
                                 </td>
+
+
                             </tr>
                             <div class="modal fade" id="product{{ $product->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">

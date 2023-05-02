@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         $mainCategories = Category::all();
-        
+
         return view('Dashboard.categories.index', compact('mainCategories'));
     }
 

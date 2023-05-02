@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Admin;
 use App\Helpers\UploadFiles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Dashboard\Admin\AdminStoreRequest;
@@ -26,13 +28,16 @@ class AdminController extends Controller
 
     public function create()
     {
-        return view('Dashboard.admins.create');
+        $roles = Role::pluck('name', 'name')->all();
+        return view('Dashboard.admins.create', compact('roles'));
     }
 
     public function edit($id)
     {
         $admin = Admin::find($id);
-        return view('Dashboard.admins.edit', compact('admin'));
+        $roles = Role::pluck('name', 'name')->all();
+        $adminRole = $admin->roles->pluck('name', 'name')->all();
+        return view('Dashboard.admins.edit', compact('admin', 'roles', 'adminRole'));
     }
 
     public function store(AdminStoreRequest $request)
@@ -40,6 +45,7 @@ class AdminController extends Controller
         $data = $request->except(['_token', 'password', 'hidden']);
         $data['password'] = Hash::make($request->password);
         $admin = Admin::create($data);
+        $admin->assignRole($request->input('roles'));
         if ($request->hasfile('image')) {
             $admin['image'] = 'images/' . UploadFiles::uploadImage($request['image']);
             $admin->update();
@@ -51,7 +57,7 @@ class AdminController extends Controller
     {
         $admin = Admin::find($id);
         $data = $request->except(['_token', 'password', 'hidden']);
-        if ( $request->password!='') {
+        if ($request->password != '') {
             $data['password'] = Hash::make($request->password);
         }
         if ($request->hasfile('image')) {
@@ -61,6 +67,9 @@ class AdminController extends Controller
             $data['image'] = 'images/' . UploadFiles::uploadImage($request['image']);
         }
         $admin->update($data);
+
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        $admin->assignRole($request->input('roles'));
 
         return redirect()->route('admin.index');
     }

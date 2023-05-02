@@ -15,9 +15,9 @@ class SizeSeeder extends Seeder
     public function run(): void
     {
         DB::table('sizes')->delete();
-        $name = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-        foreach ($name as $n) {
-            Size::create(['name' => $n]);
+        $name = ['XS' => 100, 'S' => 200, 'M' => 300, 'L' => 400, 'XL' => 500, 'XXL' => 600, 'XXXL' => 700];
+        foreach ($name as $key => $value) {
+            Size::create(['name' => $key, 'price' => $value]);
         }
     }
 }

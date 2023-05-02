@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\AdminController;
-use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\SubSubCategoryController;
 
 /*
@@ -21,6 +22,7 @@ use App\Http\Controllers\Dashboard\SubSubCategoryController;
 */
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function () {
+    Route::resource('roles', RoleController::class);
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::group(['prefix' => 'admins'], function () {

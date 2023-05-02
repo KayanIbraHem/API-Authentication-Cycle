@@ -2,7 +2,7 @@
 @section('css')
 
 @section('title')
-تعديل|{{$admin->name}}
+    تعديل|{{ $admin->name }}
 @stop
 @endsection
 @section('page-header')
@@ -29,43 +29,55 @@
         <div class="card card-statistics h-100">
             <div class="card-body">
                 @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-                <form action="{{ route('admin.update',['id'=>$admin->id]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.update', ['id' => $admin->id]) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1">الاسم</label>
-                        <input type="text" name='name' value="{{$admin->name}}" class="form-control" id="exampleInputEmail1"
-                            aria-describedby="emailHelp">
+                        <input type="text" name='name' value="{{ $admin->name }}" class="form-control"
+                            id="exampleInputEmail1" aria-describedby="emailHelp">
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">البريد الالكتروني</label>
-                        <input type="email" name="email" value="{{$admin->email}}" class="form-control" id="exampleInputEmail1"
-                            aria-describedby="emailHelp">
+                        <input type="email" name="email" value="{{ $admin->email }}" class="form-control"
+                            id="exampleInputEmail1" aria-describedby="emailHelp">
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">كلمة المرور</label>
-                        <input type="password" name="password" value="{{$admin->password}}" class="form-control" id="exampleInputPassword1">
+                        <input type="password" name="password" value="{{ $admin->password }}" class="form-control"
+                            id="exampleInputPassword1">
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">رقم الهاتف</label>
-                        <input type="text" name="phone" value="{{$admin->phone}}" class="form-control" id="exampleInputPassword1">
+                        <input type="text" name="phone" value="{{ $admin->phone }}" class="form-control"
+                            id="exampleInputPassword1">
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">الصورة الشخصيه</label>
-                        <input type="file" name="image"  data-default-file="{{asset($admin->image)}}" class="form-control dropify">
+                        <input type="file" name="image" data-default-file="{{ asset($admin->image) }}"
+                            class="form-control dropify">
                     </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>الأدوار</strong>
+                            {!! Form::select('roles[]', $roles, $adminRole, ['class' => 'form-control', 'multiple']) !!}
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">تأكيد</button>
                 </form>
             </div>

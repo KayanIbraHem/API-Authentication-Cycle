@@ -36,7 +36,7 @@
                             <th scope="col">الاسم</th>
                             <th scope="col">الصورة</th>
                             <th scope="col">القسم الرئيسي</th>
-                            {{-- <th scope="col">العمليات</th> --}}
+                            <th scope="col">العمليات</th>
                         </tr>
                     </thead>
                     <tbody>

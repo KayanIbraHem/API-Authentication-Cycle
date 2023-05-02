@@ -27,8 +27,4 @@ class Product extends Model
         return $this->belongsTo(Size::class);
     }
 
-    public function price()
-    {
-        return $this->belongsTo(Price::class,'size_id');
-    }
 }

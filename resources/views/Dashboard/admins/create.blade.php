@@ -61,10 +61,15 @@
                         <input type="text" name="phone" value="{{ old('phone') }}" class="form-control"
                             id="exampleInputPassword1">
                     </div>
-
                     <div class="form-group">
                         <label for="exampleInputEmail1">الصورة الشخصيه</label>
                         <input type="file" name="image" class="form-control dropify">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>الأدوار</strong>
+                            {!! Form::select('roles[]', $roles, [], ['class' => 'form-control', 'multiple']) !!}
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">تأكيد</button>
                 </form>

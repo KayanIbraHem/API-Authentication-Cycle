@@ -14,6 +14,13 @@ use App\Http\Requests\Dashboard\Product\ProductUpdateRequest;
 
 class ProductController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index', 'show']]);
+        $this->middleware('permission:product-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:product-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $products = Product::with(['category'])->get();
@@ -34,7 +41,7 @@ class ProductController extends Controller
 
         return view('Dashboard.products.edit', compact('product', 'categories', 'sizes'));
     }
-    public function update(ProductUpdateRequest $request,$id)
+    public function update(ProductUpdateRequest $request, $id)
     {
         $product = Product::find($id);
         $data = $request->except('_token');
@@ -62,5 +69,14 @@ class ProductController extends Controller
     }
     public function delete($id)
     {
+        $product = Product::find($id);
+        if ($product->image != '') {
+            File::deleteDirectory(public_path('product/' . $product->id),);
+        }
+
+        if ($product->delete()) {
+            return redirect()->route('product.index')->with('success', 'تم الحذف');
+        }
+        return redirect()->back()->with('error', 'يوجد خطأ ما');
     }
 }

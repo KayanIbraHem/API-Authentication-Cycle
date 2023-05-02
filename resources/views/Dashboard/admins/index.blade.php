@@ -38,6 +38,7 @@
                                 <th scope="col">الاسم</th>
                                 <th scope="col">البريد الالكتروني</th>
                                 <th scope="col">رقم الهاتف</th>
+                                <th scope="col">الأدوار</th>
                                 <th scope="col">العمليات</th>
                             </tr>
                         </thead>
@@ -49,6 +50,15 @@
                                     <td>{{ $admin->email }}</td>
                                     <td>{{ $admin->phone }}</td>
                                     <td>
+                                        @if (!empty($admin->getRoleNames()))
+                                            @foreach ($admin->getRoleNames() as $v)
+                                                <label class="badge badge-success" style="background-color: red; ">{{ $v }}</label>
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    @can('role-list')
+
+                                    <td>
                                         <a class="btn btn-info btn-sm edit"
                                             href="{{ route('admin.edit', ['id' => $admin->id]) }}" title="تعديل"><i
                                                 class="fa fa-edit"></i></a>
@@ -57,6 +67,8 @@
                                             <i style="color: White" class="fa fa-trash"></i>
                                         </button>
                                     </td>
+                                    @endcan
+
                                 </tr>
                                 <div class="modal fade" id="admin{{ $admin->id }}" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
