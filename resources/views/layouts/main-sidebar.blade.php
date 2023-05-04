@@ -25,15 +25,36 @@
                             <div class="clearfix"></div>
                         </a>
                         <ul id="elements" class="collapse" data-parent="#sidebarnav">
-                            <li><a href="{{ route('category.create') }}">اضافة قسم</a></li>
-                            <li><a href="{{ route('category.index') }}">قائمة الاقسام </a></li>
                             <li>
-                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#login"> الاقسام
+
+                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#maincat">الاقسام
+                                    الرئيسية<div class="pull-right"><i class="ti-plus"></i></div>
+                                    <div class="clearfix"></div>
+                                </a>
+                                <ul id="maincat" class="collapse">
+                                    <li><a href="{{ route('category.create') }}">اضافة قسم</a></li>
+                                    <li><a href="{{ route('category.index') }}">قائمة الأقسام الرئيسية</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#subcat">الاقسام
                                     الفرعية<div class="pull-right"><i class="ti-plus"></i></div>
                                     <div class="clearfix"></div>
                                 </a>
-                                <ul id="login" class="collapse">
-                                    <li> <a href="{{ route('category.subsub.create') }}">اضافة قسم فرعي</a> </li>
+                                <ul id="subcat" class="collapse">
+                                    <li> <a href="{{ route('category.subcategory.create') }}">اضافة قسم </a> </li>
+                                    <li> <a href="{{ route('category.subcategory.index') }}">الاقسام الفرعية</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" data-toggle="collapse" data-target="#subsubcat">الاقسام
+                                    الفرعية للقسم الفرعي
+                                    <div class="pull-right"><i class="ti-plus"></i></div>
+                                    <div class="clearfix"></div>
+                                </a>
+                                <ul id="subsubcat" class="collapse">
+                                    <li> <a href="{{ route('category.subsub.create') }}">اضافة قسم </a> </li>
                                     <li> <a href="{{ route('category.subsub.index') }}">الاقسام الفرعية للقسم الفرعي</a>
                                     </li>
                                 </ul>
@@ -51,12 +72,12 @@
                         <div class="clearfix"></div>
                     </a>
                     <ul id="chart" class="collapse" data-parent="#sidebarnav">
-                        @can('product-create')
-                            <li> <a href="{{ route('product.create') }}">اضافة منتج</a> </li>
-                        @endcan
-                        @can('product-list')
-                            <li> <a href="{{ route('product.index') }}">قائمة المنتجات</a> </li>
-                        @endcan
+                        {{-- @can('product-create') --}}
+                        <li> <a href="{{ route('product.create') }}">اضافة منتج</a> </li>
+                        {{-- @endcan --}}
+                        {{-- @can('product-list') --}}
+                        <li> <a href="{{ route('product.index') }}">قائمة المنتجات</a> </li>
+                        {{-- @endcan --}}
                     </ul>
                 </li>
                 @can('role-list')

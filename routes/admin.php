@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\SubCategoryContoller;
 use App\Http\Controllers\Dashboard\SubSubCategoryController;
 
 /*
@@ -40,6 +41,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::delete('/{id}', [CategoryController::class, 'delete'])->name('category.delete');
         Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/{id}/update', [CategoryController::class, 'update'])->name('category.update');
+
+        Route::get('/subcategory', [SubCategoryContoller::class, 'index'])->name('category.subcategory.index');
+        Route::get('subcategory/create', [SubCategoryContoller::class, 'create'])->name('category.subcategory.create');
+        Route::post('subcategory/create', [SubCategoryContoller::class, 'store'])->name('category.subcategory.store');
+        Route::delete('subcategory/{id}', [SubCategoryContoller::class, 'delete'])->name('category.subcategory.delete');
+        Route::get('subcategory/{id}/edit', [SubCategoryContoller::class, 'edit'])->name('category.subcategory.edit');
+        Route::post('subcategory/{id}/update', [SubCategoryContoller::class, 'update'])->name('category.subcategory.update');
 
         Route::get('/subsubcategory', [SubSubCategoryController::class, 'index'])->name('category.subsub.index');
         Route::get('subsubcategory/create', [SubSubCategoryController::class, 'create'])->name('category.subsub.create');

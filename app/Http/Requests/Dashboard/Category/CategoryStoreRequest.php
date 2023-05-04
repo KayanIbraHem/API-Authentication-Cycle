@@ -24,7 +24,7 @@ class CategoryStoreRequest extends FormRequest
         return [
             'name' => 'required|string|min:1|max:30|unique:categories,name',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
-            'parent_id'=>'required',
+            // 'parent_id'=>'required',
         ];
     }
 
@@ -41,7 +41,7 @@ class CategoryStoreRequest extends FormRequest
             'image.mimes' => 'هذا الامتداد غير مدعوم',
             'image.max' => 'حجم الصورة كبير',
 
-            'parent_id.required'=>'القسم التابع مطلوب'
+            // 'parent_id.required'=>'القسم التابع مطلوب'
         ];
 
     }

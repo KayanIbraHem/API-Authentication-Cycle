@@ -14,4 +14,9 @@ class Size extends Model
         'name',
         'price'
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

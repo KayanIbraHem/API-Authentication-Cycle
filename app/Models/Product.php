@@ -22,9 +22,9 @@ class Product extends Model
         return $this->belongsTo(Category::class,'maincat_id');
     }
 
-    public function size()
+    public function sizes()
     {
-        return $this->belongsTo(Size::class);
+        return $this->belongsToMany(Size::class);
     }
 
 }

@@ -16,15 +16,15 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $mainCategories = Category::all();
+        $mainCategories = Category::whereNull('parent_id')->get();
+        // $mainCategories = Category::all();
 
-        return view('Dashboard.categories.index', compact('mainCategories'));
+        return view('Dashboard.categories.maincategory.index', compact('mainCategories'));
     }
 
     public function create()
     {
-        $mainCategories = Category::where('parent_id', 0)->get();
-        return view('Dashboard.categories.create', compact('mainCategories'));
+        return view('Dashboard.categories.maincategory.create');
     }
 
     public function store(CategoryStoreRequest $request)
@@ -34,14 +34,13 @@ class CategoryController extends Controller
             $category['image'] = 'category/' . $category->id . '/' . UploadFiles::uploadImageWithFolder($request['image'], $category->id, 'category/');
             $category->update();
         }
-        return redirect()->route('category.create');
+        return redirect()->route('category.index')->with('store','تم اضافة القسم بنجاح');
     }
 
     public function edit($id)
     {
-        $mainCategories = Category::where('parent_id', 0)->get();
-        $category = Category::where('id', $id)->withCount('subcategories')->firstorfail();
-        return view('Dashboard.categories.edit', compact('category', 'mainCategories'));
+        $category = Category::where('id', $id)->firstorfail();
+        return view('Dashboard.categories.maincategory.edit', compact('category'));
     }
 
     public function update(CategoryUpdateRequest $request, $id)
@@ -55,7 +54,7 @@ class CategoryController extends Controller
             $data['image'] = 'category/' . $category->id . '/' . UploadFiles::uploadImageWithFolder($request['image'], $category->id, 'category/');
         }
         $category->update($data);
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with('update','تم تعديل القسم بنجاح');
     }
 
     public function delete($id)
@@ -66,7 +65,7 @@ class CategoryController extends Controller
         }
 
         if ($category->delete()) {
-            return redirect()->route('category.index')->with('success', 'تم الاضافة بنجاح');
+            return redirect()->route('category.index')->with('delete', 'تم حذف القسم');
         }
         return redirect()->back()->with('error', 'يوجد خطأ ما');
     }
