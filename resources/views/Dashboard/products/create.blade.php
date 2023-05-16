@@ -46,7 +46,7 @@
 
                     <div class="form-group">
                         <label for="exampleFormControlSelect1" class="mb-1">القسم الرئيسي</label>
-                        <select name="maincat_id" id="exampleFormControlSelect1" class="form-control">
+                        <select name="maincat_id" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
@@ -54,8 +54,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1" class="mb-1">القسم الرئيسي الفرعي</label>
-                        <select name="subcat_id" id="exampleFormControlSelect1" class="form-control">
+                        <label for="exampleFormControlSelect1" class="mb-1">القسم الفرعي</label>
+                        <select name="subcat_id" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
                             @foreach ($categories as $category)
                                 @foreach ($category->subcategories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -66,8 +66,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1" class="mb-1">القسم الفرعي</label>
-                        <select name="subsub_cat" id="exampleFormControlSelect1" class="form-control">
+                        <label for="exampleFormControlSelect1" class="mb-1">القسم الفرعي للفرعي</label>
+                        <select name="subsub_cat" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
                             @foreach ($categories as $category)
                                 @foreach ($category->subcategories as $category)
                                     @foreach ($category->subSubCategories as $category)
@@ -81,11 +81,16 @@
 
                     <div class="form-group">
                         <label for="exampleFormControlSelect1" class="mb-1">الحجم</label>
-                        <select name="size_id" id="exampleFormControlSelect1" class="form-control">
+                        <select name="size_id" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
                             @foreach ($sizes as $size)
                                 <option value="{{ $size->id }}">{{ $size->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">السعر</label>
+                        <input type="text" name='price' value="{{ old('price') }}" class="form-control">
                     </div>
 
                     <div class="form-group">

@@ -2,12 +2,15 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\ResetPasswordController;
-use App\Http\Controllers\Api\AuthenticationController;
-use App\Http\Controllers\Api\ForgotPasswordController;
-use App\Http\Controllers\Api\VerifyPhoneNumberController;
+use App\Http\Controllers\Api\Authentication\CheckPasswordCode;
+use App\Http\Controllers\Api\Authentication\ResetPasswordController;
+use App\Http\Controllers\Api\Authentication\AuthenticationController;
+use App\Http\Controllers\Api\Authentication\ForgotPasswordController;
+use App\Http\Controllers\Api\Authentication\VerifyPhoneNumberController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +45,4 @@ Route::post('auth/changpassword', [AuthenticationController::class, 'changePassw
 Route::post('user/verfiy-phone-number', [VerifyPhoneNumberController::class, 'verify']);
 Route::post('user/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 Route::post('user/reset-password', [ResetPasswordController::class, 'resetPassword']);
+Route::post('user/check-code', [CheckPasswordCode::class, 'checkCode']);

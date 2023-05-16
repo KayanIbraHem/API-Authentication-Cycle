@@ -29,7 +29,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = Category::where('parent_id', 0)->get();
+        $categories = Category::where('parent_id', null)->get();
         $sizes = Size::all();
         return view('Dashboard.products.create', compact('categories', 'sizes'));
     }

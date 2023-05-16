@@ -25,6 +25,7 @@ class CategoryController extends Controller
 
         $category = Category::where('parent_id', $mainCategoryId)->get();
         return new CategoryCollection($category);
+        // return new CategoryResource($category);
     }
 
     public function subSubCategory($subCateoryId)

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\Authentication;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ResetPasswordRequest extends FormRequest
+class CheckCodeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,7 @@ class ResetPasswordRequest extends FormRequest
     {
         return [
             'email' => 'required|email|exists:users,email',
-            // 'code' => 'required',
-            'new_password' => 'required|confirmed|max:60',
+            'code' => 'required',
         ];
     }
 
@@ -34,12 +33,7 @@ class ResetPasswordRequest extends FormRequest
             'email.required' => 'Email is required',
             'email.email' => 'Email must be vaild',
             'email.exists' => 'User not found',
-
             'code.required' => 'Code is required',
-            'new_password.required' => 'Password is required',
-
-
-
         ];
     }
 }

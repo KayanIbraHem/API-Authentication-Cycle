@@ -2,7 +2,7 @@
 @section('css')
 
 @section('title')
-    اضافة قسم فرعي
+    اضافة قسم فرعي للفرعي
 @stop
 @endsection
 @section('page-header')
@@ -10,12 +10,12 @@
 <div class="page-title">
     <div class="row">
         <div class="col-sm-6">
-            <h4 class="mb-0">اضافة قسم فرعي</h4>
+            <h4 class="mb-0">اضافة قسم فرعي للفرعي</h4>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb pt-0 pr-0 float-left float-sm-right ">
                 <li class="breadcrumb-item"><a href="#" class="default-color">الرئيسية</a></li>
-                <li class="breadcrumb-item active">اضافة قسم فرعي</li>
+                <li class="breadcrumb-item active">اضافة قسم فرعي للفرعي</li>
             </ol>
         </div>
     </div>

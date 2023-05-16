@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Authentication;
 
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\Api\UserResource;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Api\Authentication\LoginRequest;
 use App\Http\Requests\Api\Authentication\RegisterRequest;
@@ -64,6 +62,11 @@ class AuthenticationController extends Controller
     public function changePassword(ChangePasswordRequest $request)
     {
         $validated = $request->validated();
+        if (!Hash::check($validated['password'], auth()->user()->password)) {
+            return response()->json([
+                'message' => 'The current password is wrong'
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
         User::find(auth()->user()->id)->update(['password' => Hash::make($validated['new_password'])]);
         return response()->json([
             'success' => 'Password has been changed successfully',

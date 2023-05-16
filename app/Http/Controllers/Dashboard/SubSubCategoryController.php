@@ -19,7 +19,7 @@ class SubSubCategoryController extends Controller
     }
     public function create()
     {
-        $mainCategories = Category::where('parent_id', 0)->get();
+        $mainCategories = Category::whereNull('parent_id')->get();
         return view('Dashboard.categories.sbusubcategory.create', compact('mainCategories'));
     }
 
