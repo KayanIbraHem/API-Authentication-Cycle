@@ -19,12 +19,17 @@ class Product extends Model
     ];
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class,'maincat_id','id');
     }
 
     public function sizes()
     {
-        return $this->belongsToMany(Size::class);
+        return $this->belongsToMany(Size::class,'product_price')->withPivot('price');
     }
+
+    // public function getSize()
+    // {
+    //     return $this->hasMany(Size::class);
+    // }
 
 }

@@ -22,12 +22,13 @@ class ProductStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:1|max:30|unique:products,name',
+            'name' => 'required|string|min:1|max:30',
             'maincat_id' => 'required',
             'subcat_id' => 'required',
             'subsub_cat' => 'required',
             'size_id' => 'required',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            // 'price'=>'required|numeric',
             'description' => 'required|min:1|max:200',
 
         ];
@@ -39,7 +40,7 @@ class ProductStoreRequest extends FormRequest
             'name.required' => 'الاسم مطلوب',
             'name.min' => 'يجب الا يقل الاسم عن حرف',
             'name.max' => 'يجب الا يزيد الاسم عن 20 حرف',
-            'name.unique' => 'الاسم موجود بالفعل',
+            // 'name.unique' => 'الاسم موجود بالفعل',
 
             'maincat_id.required' => 'القسم  مطلوب',
             'subcat_id.required' => 'القسم الرئيسي الفرعي مطلوب',
@@ -50,7 +51,9 @@ class ProductStoreRequest extends FormRequest
             'image.image' => 'الصورة مطلوبة',
             'image.mimes' => 'هذا الامتداد غير مدعوم',
             'image.max' => 'حجم الصورة كبير',
-
+            // 'price.required'=>'السعر مطلوب',
+            // 'price.numeric'=>'السعر يجب ان يكون رقم',
+            // 'price.max'=>'السعر كبير جدا',
 
 
             'description.required' => 'الوصف مطلوب',

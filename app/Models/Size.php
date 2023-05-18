@@ -12,11 +12,15 @@ class Size extends Model
 
     protected $fillable=[
         'name',
-        'price'
     ];
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class,'product_price')->withPivot('price');
     }
+
+    // public function getProduct()
+    // {
+    //     return $this->belongsTo(Product::class);
+    // }
 }

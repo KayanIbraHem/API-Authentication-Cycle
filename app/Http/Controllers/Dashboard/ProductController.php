@@ -23,7 +23,7 @@ class ProductController extends Controller
     }
     public function index()
     {
-        $products = Product::with(['category'])->get();
+        $products = Product::all();
         return view('Dashboard.products.index', compact('products'));
     }
 
@@ -57,6 +57,7 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
         $product = Product::create($request->validated());
+        $product->sizes()->attach($request->size_id, ['price' => $request->price]);
         $data = $request->except('_token');
         if ($request->hasFile('image')) {
             if ($request->image != '') {

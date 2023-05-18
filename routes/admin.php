@@ -41,6 +41,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::delete('/{id}', [CategoryController::class, 'delete'])->name('category.delete');
         Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/{id}/update', [CategoryController::class, 'update'])->name('category.update');
+        Route::get('get-subcategories/{id}', [CategoryController::class, 'getSubcategories'])->name('get-subcategories');
+        Route::get('get-subsubcategories/{id}', [CategoryController::class, 'getSubsubcategories'])->name('get-subsubcategories');
 
         Route::get('/subcategory', [SubCategoryContoller::class, 'index'])->name('category.subcategory.index');
         Route::get('subcategory/create', [SubCategoryContoller::class, 'create'])->name('category.subcategory.create');

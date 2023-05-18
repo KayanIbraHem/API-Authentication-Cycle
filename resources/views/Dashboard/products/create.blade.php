@@ -56,11 +56,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1" class="mb-1">القسم الفرعي</label>
                         <select name="subcat_id" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
-                            @foreach ($categories as $category)
-                                @foreach ($category->subcategories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            @endforeach
+
                         </select>
 
                     </div>
@@ -68,13 +64,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1" class="mb-1">القسم الفرعي للفرعي</label>
                         <select name="subsub_cat" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
-                            @foreach ($categories as $category)
-                                @foreach ($category->subcategories as $category)
-                                    @foreach ($category->subSubCategories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                @endforeach
-                            @endforeach
+
                         </select>
                     </div>
 
@@ -90,7 +80,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">السعر</label>
-                        <input type="text" name='price' value="{{ old('price') }}" class="form-control">
+                        <input type="number" name='price' value="{{ old('price') }}" class="form-control">
                     </div>
 
                     <div class="form-group">
@@ -111,5 +101,52 @@
 <!-- row closed -->
 @endsection
 @section('js')
+<script>
+    $('select[name="maincat_id"]').on('change', function() {
+        var categoryId = $(this).val();
+        if (categoryId) {
+            $.ajax({
+                url: '{{ route('get-subcategories', '') }}/' + categoryId,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('select[name="subcat_id"]').empty();
+                    $('select[name="subsub_cat"]').empty();
+                    $('select[name="subcat_id"]').append(
+                        '<option selected disabled>  Select...</option>');
+                    $.each(data, function(key, value) {
+                        $('select[name="subcat_id"]').append('<option value="' + value.id +
+                            '">' +
+                            value.name + '</option>');
+                    });
+                }
+            });
+        } else {
+            console.log('AJAX load did not work');
+        }
+    });
 
+    $('select[name="subcat_id"]').on('change', function() {
+        var subCatID = $(this).val();
+        if (subCatID) {
+            $.ajax({
+                url: '{{ route('get-subsubcategories', '') }}/' + subCatID,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $('select[name="subsub_cat"]').empty();
+                    $('select[name="subsub_cat"]').append(
+                        '<option selected disabled>  Select...</option>');
+                    $.each(data, function(key, value) {
+                        $('select[name="subsub_cat"]').append('<option value="' + value.id +
+                            '">' +
+                            value.name + '</option>');
+                    });
+                }
+            });
+        } else {
+            console.log('AJAX load did not work');
+        }
+    });
+</script>
 @endsection

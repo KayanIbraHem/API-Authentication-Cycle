@@ -38,7 +38,7 @@
                             <th scope="col">الحجم</th>
                             <th scope="col">السعر</th>
                             <th scope="col">الصورة</th>
-                            <th scope="col">الوصصف</th>
+                            <th scope="col">الوصف</th>
                             <th scope="col">العمليات</th>
                         </tr>
                     </thead>
@@ -48,8 +48,10 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->category->name }}</td>
-                                <td>{{ $product->size->name }}</td>
-                                <td>{{ $product->size->price }}</td>
+                                @foreach ($product->sizes as $size)
+                                    <td>{{ $size->name }}</td>
+                                    <td>{{ $size->pivot->price }}</td>
+                                @endforeach
                                 <td><img src=" {{ asset($product->image) }}" width="100px" height="100px"></td>
                                 <td>{{ $product->description }}</td>
                                 <td>

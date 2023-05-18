@@ -34,7 +34,7 @@ class CategoryController extends Controller
             $category['image'] = 'category/' . $category->id . '/' . UploadFiles::uploadImageWithFolder($request['image'], $category->id, 'category/');
             $category->update();
         }
-        return redirect()->route('category.index')->with('store','تم اضافة القسم بنجاح');
+        return redirect()->route('category.index')->with('store', 'تم اضافة القسم بنجاح');
     }
 
     public function edit($id)
@@ -54,7 +54,7 @@ class CategoryController extends Controller
             $data['image'] = 'category/' . $category->id . '/' . UploadFiles::uploadImageWithFolder($request['image'], $category->id, 'category/');
         }
         $category->update($data);
-        return redirect()->route('category.index')->with('update','تم تعديل القسم بنجاح');
+        return redirect()->route('category.index')->with('update', 'تم تعديل القسم بنجاح');
     }
 
     public function delete($id)
@@ -68,5 +68,17 @@ class CategoryController extends Controller
             return redirect()->route('category.index')->with('delete', 'تم حذف القسم');
         }
         return redirect()->back()->with('error', 'يوجد خطأ ما');
+    }
+
+    public function getSubcategories($id)
+    {
+        $subcategories = Category::where('parent_id', $id)->get();
+        return response()->json($subcategories);
+    }
+
+    public function getSubsubcategories($id)
+    {
+        $subsubcategories  = Category::where('parent_id', $id)->get();
+        return response()->json($subsubcategories);
     }
 }
