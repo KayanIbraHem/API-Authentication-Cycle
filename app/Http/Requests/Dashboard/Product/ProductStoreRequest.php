@@ -26,7 +26,7 @@ class ProductStoreRequest extends FormRequest
             'maincat_id' => 'required',
             'subcat_id' => 'required',
             'subsub_cat' => 'required',
-            'size_id' => 'required',
+            'data_list.*.size_id.*' => 'required',
             'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             // 'price'=>'required|numeric',
             'description' => 'required|min:1|max:200',
@@ -45,7 +45,7 @@ class ProductStoreRequest extends FormRequest
             'maincat_id.required' => 'القسم  مطلوب',
             'subcat_id.required' => 'القسم الرئيسي الفرعي مطلوب',
             'subsub_cat.required' => 'القسم الفرعي مطلوب',
-            'size_id.required' => 'الحجم مطلوب',
+            'data_list.*.size_id.*.required' => 'الحجم مطلوب',
 
             'image.required' => 'الصورة مطلوبة',
             'image.image' => 'الصورة مطلوبة',

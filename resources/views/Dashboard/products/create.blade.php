@@ -67,22 +67,58 @@
 
                         </select>
                     </div>
+                    {{-- <div class="card-body">
+                        <div class="col">
 
-
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1" class="mb-1">الحجم</label>
-                        <select name="size_id" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
+                            <label for="sizes">Sizes:</label>
                             @foreach ($sizes as $size)
-                                <option value="{{ $size->id }}">{{ $size->name }}</option>
+                                <input type="checkbox" name="size_id[]" value="{{ $size->id }}">
+                                {{ $size->name }}<br>
                             @endforeach
-                        </select>
-                    </div>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">السعر</label>
-                        <input type="number" name='price' value="{{ old('price') }}" class="form-control">
-                    </div>
+                        <div class="col">
 
+                            <label for="prices">Prices:</label>
+                            @foreach ($sizes as $size)
+                                <input type="number" name="price[]" value="0" step="0.01" ><br>
+                            @endforeach
+                        </div>
+                    </div> --}}
+
+                    {{-- <br> --}}
+                    <div class="card-body">
+                        <div class="repeater">
+                            <div data-repeater-list="data_list">
+                                <div data-repeater-item>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="exampleInputEmail1" class="mr-sm-2">المقاس:</label>
+                                            <div class="box">
+                                                <select class="custom-select my-1 mr-sm-2" name="size_id">
+                                                    @foreach ($sizes as $size)
+                                                        <option value="{{ $size->id }}">{{ $size->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label for="exampleInputEmail1">السعر</label>
+                                            <input type="number" name='price' value="{{ old('price') }}"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-20">
+                                <div class="col-12">
+                                    <input class="button" data-repeater-create type="button" value="صف جديد" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">وصف المنتج</label>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="12" name="description"></textarea>

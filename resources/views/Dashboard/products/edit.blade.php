@@ -38,6 +38,71 @@
                             </ul>
                         </div>
                     @endif
+                    <br>
+                    <label for="exampleFormControlTextarea1">معلومات الجحم والسعر </label>
+                    <br>
+
+                    <table id="datatable" class="table  table-dark table-sm table-bordered p-0" data-page-length="50"
+                        style="text-align: center">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">الحجم</th>
+                                <th scope="col">السعر</th>
+                                <th scope="col">العمليات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach ($product->sizes as $size)
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $size->name }}</td>
+                                    <td>{{ $size->pivot->price }}</td>
+                                    <td>
+                                        @can('product-edit')
+                                            <a class="btn btn-info btn-sm edit"
+                                                href="{{ route('product.edit', ['id' => $product->id]) }}" title="تعديل"><i
+                                                    class="fa fa-edit"></i></a>
+                                        @endcan
+                                        @can('product-delete')
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#product{{ $product->id }}" title="حذف">
+                                                <i style="color: White" class="fa fa-trash"></i>
+                                            </button>
+                                        @endcan
+                                    </td>
+                            </tr>
+                            @endforeach
+                            <div class="modal fade" id="product{{ $product->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <form action="{{ route('product.delete', ['id' => $product->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 style="font-family: 'Cairo', sans-serif;" class="modal-title"
+                                                    id="exampleModalLabel">انت تقوم بعملية حذف الان</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <div class="modal-footer">
+                                                    <button type="button"
+                                                        class="btn btn-secondary"data-dismiss="modal">رجوع</button>
+                                                    <button type="submit" class="btn btn-danger">تأكيد</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </tbody>
+                    </table>
+                    <br>
                     <form action="{{ route('product.update', ['id' => $product->id]) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
@@ -45,63 +110,56 @@
                             <label for="exampleInputEmail1">اسم المنتج</label>
                             <input type="text" name='name' value="{{ $product->name }}" class="form-control">
                         </div>
-
                         <div class="form-group">
                             <label for="exampleFormControlSelect1" class="mb-1">القسم الرئيسي</label>
-                            <select name="maincat_id" id="exampleFormControlSelect1" class="form-control">
+                            <select name="maincat_id" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}"
-                                        {{ $category->id == $product->maincat_id ? 'selected' : '' }}>{{ $category->name }}
+                                        {{ $category->id == $product->maincat_id ? 'selected' : '' }}>
+                                        {{ $category->name }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-
+                        <br>
                         <div class="form-group">
                             <label for="exampleFormControlSelect1" class="mb-1">القسم الرئيسي الفرعي</label>
-                            <select name="subcat_id" id="exampleFormControlSelect1" class="form-control">
+                            <select name="subcat_id" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
                                 @foreach ($categories as $mainCat)
                                     @foreach ($mainCat->subcategories as $subCategory)
-                                        <option value="{{ $subCategory->id }}" {{$subCategory->id==$product->subcat_id?"selected":''}}>{{ $subCategory->name }}</option>
+                                        <option value="{{ $subCategory->id }}"
+                                            {{ $subCategory->id == $product->subcat_id ? 'selected' : '' }}>
+                                            {{ $subCategory->name }}</option>
                                     @endforeach
                                 @endforeach
                             </select>
 
                         </div>
-
+                        <br>
                         <div class="form-group">
                             <label for="exampleFormControlSelect1" class="mb-1">القسم الفرعي</label>
-                            <select name="subsub_cat" id="exampleFormControlSelect1" class="form-control">
+                            <select name="subsub_cat" id="exampleFormControlSelect1" class="custom-select my-1 mr-sm-2">
                                 @foreach ($categories as $mainCategory)
                                     @foreach ($mainCategory->subcategories as $subCategory)
                                         @foreach ($subCategory->subSubCategories as $subSubCategory)
-                                            <option value="{{ $subSubCategory->id }}"{{$subSubCategory->id==$product->subsub_cat?"selected":''}}>{{ $subSubCategory->name }}</option>
+                                            <option
+                                                value="{{ $subSubCategory->id }}"{{ $subSubCategory->id == $product->subsub_cat ? 'selected' : '' }}>
+                                                {{ $subSubCategory->name }}</option>
                                         @endforeach
                                     @endforeach
                                 @endforeach
                             </select>
                         </div>
-
-
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect1" class="mb-1">الحجم</label>
-                            <select name="size_id" id="exampleFormControlSelect1" class="form-control">
-                                @foreach ($sizes as $size)
-                                    <option value="{{ $size->id }}"{{$size->id==$product->size_id?"selected":""}}>{{ $size->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
+                        <br>
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">وصف المنتج</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="12" name="description">{{ $product->description }}</textarea>
                         </div>
-
+                        <br>
                         <div class="form-group">
                             <label for="exampleInputEmail1">الصورة</label>
                             <input type="file" name="image" data-default-file="{{ asset($product->image) }}"
                                 class="form-control dropify">
-
                         </div>
                         <button type="submit" class="btn btn-primary">تأكيد</button>
                     </form>

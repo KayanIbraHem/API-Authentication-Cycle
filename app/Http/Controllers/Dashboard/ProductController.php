@@ -35,7 +35,7 @@ class ProductController extends Controller
     }
     public function edit($id)
     {
-        $categories = Category::where('parent_id', 0)->get();
+        $categories = Category::where('parent_id', null)->get();
         $product = Product::where('id', $id)->firstorfail();
         $sizes = Size::all();
 
@@ -56,9 +56,13 @@ class ProductController extends Controller
     }
     public function store(ProductStoreRequest $request)
     {
+        // dd($request->all());
+        $data = $request->except('_token', 'price', 'size_id');
         $product = Product::create($request->validated());
-        $product->sizes()->attach($request->size_id, ['price' => $request->price]);
-        $data = $request->except('_token');
+        $dataList = $request->data_list;
+        foreach ($dataList as $d) {
+            $product->sizes()->attach($d['size_id'], ['price' => $d['price']]);
+        }
         if ($request->hasFile('image')) {
             if ($request->image != '') {
                 File::deleteDirectory(public_path('product/' . $product->id),);

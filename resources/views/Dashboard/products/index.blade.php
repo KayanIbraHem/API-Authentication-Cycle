@@ -48,9 +48,9 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->category->name }}</td>
-                                @foreach ($product->sizes as $size)
+                                @foreach ($product->sizes->skip(1) as $size)
                                     <td>{{ $size->name }}</td>
-                                    <td>{{ $size->pivot->price }}</td>
+                                    <td>{{ $size->pivot->price}}</td>
                                 @endforeach
                                 <td><img src=" {{ asset($product->image) }}" width="100px" height="100px"></td>
                                 <td>{{ $product->description }}</td>
