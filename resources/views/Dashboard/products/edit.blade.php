@@ -54,19 +54,20 @@
                         </thead>
                         <tbody>
                             <tr>
-                                @foreach ($product->sizes as $size)
-                                    <td>{{ $loop->iteration }}</td>
+                                @foreach ($product->size_names as $size)
+                                    <td>{{ $size->id }}</td>
                                     <td>{{ $size->name }}</td>
-                                    <td>{{ $size->pivot->price }}</td>
+                                    <td>{{ $size->price }}</td>
                                     <td>
+                                        {{-- @dd($size) --}}
                                         @can('product-edit')
                                             <a class="btn btn-info btn-sm edit"
-                                                href="{{ route('product.edit', ['id' => $product->id]) }}" title="تعديل"><i
+                                                href="{{ route('product.size.edit', ['id'=>$size->id]) }}" title="تعديل"><i
                                                     class="fa fa-edit"></i></a>
                                         @endcan
                                         @can('product-delete')
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#product{{ $product->id }}" title="حذف">
+                                                data-target="#product{{ $size->id }}" title="حذف">
                                                 <i style="color: White" class="fa fa-trash"></i>
                                             </button>
                                         @endcan

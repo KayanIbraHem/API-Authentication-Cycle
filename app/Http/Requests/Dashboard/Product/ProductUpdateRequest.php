@@ -26,8 +26,8 @@ class ProductUpdateRequest extends FormRequest
             'maincat_id' => 'required',
             'subcat_id' => 'required',
             'subsub_cat' => 'required',
-            'size_id' => 'required',
-            // 'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            // 'size_id' => 'required',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
             'description' => 'required|min:1|max:200',
 
         ];
@@ -44,7 +44,7 @@ class ProductUpdateRequest extends FormRequest
             'maincat_id.required' => 'القسم  مطلوب',
             'subcat_id.required' => 'القسم الرئيسي الفرعي مطلوب',
             'subsub_cat.required' => 'القسم الفرعي مطلوب',
-            'size_id.required' => 'الحجم مطلوب',
+            // 'size_id.required' => 'الحجم مطلوب',
 
             // 'image.required' => 'الصورة مطلوبة',
             // 'image.image' => 'الصورة مطلوبة',

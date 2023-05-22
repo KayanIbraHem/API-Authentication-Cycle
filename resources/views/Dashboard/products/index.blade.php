@@ -28,6 +28,7 @@
     <div class="col-md-12 mb-30">
         <div class="card card-statistics h-100">
             <div class="card-body">
+
                 <table id="datatable" class="table  table-dark table-sm table-bordered p-0" data-page-length="50"
                     style="text-align: center">
                     <thead>
@@ -35,8 +36,7 @@
                             <th scope="col">#</th>
                             <th scope="col">الاسم</th>
                             <th scope="col">القسم الرئيسي</th>
-                            <th scope="col">الحجم</th>
-                            <th scope="col">السعر</th>
+                            <th scope="col">المقاس والسعر</th>
                             <th scope="col">الصورة</th>
                             <th scope="col">الوصف</th>
                             <th scope="col">العمليات</th>
@@ -48,10 +48,19 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->category->name }}</td>
-                                @foreach ($product->sizes->skip(1) as $size)
-                                    <td>{{ $size->name }}</td>
-                                    <td>{{ $size->pivot->price}}</td>
-                                @endforeach
+                                <td>
+                                    {{-- @foreach ($product->sizes as $size) --}}
+                                    {{-- <li> --}}
+                                    {{-- @dd($size) --}}
+                                    {{-- المقاس: {{ $product->size_names }} -> السعر: {{ $size->price }} --}}
+                                    {{-- </li><br> --}}
+                                    {{-- @endforeach --}}
+                                    @foreach ($product->size_names as $item)
+                                        <li>
+                                            المقاس: {{ $item->name }} - السعر: {{ $item->price }}
+                                        </li>
+                                    @endforeach
+                                </td>
                                 <td><img src=" {{ asset($product->image) }}" width="100px" height="100px"></td>
                                 <td>{{ $product->description }}</td>
                                 <td>

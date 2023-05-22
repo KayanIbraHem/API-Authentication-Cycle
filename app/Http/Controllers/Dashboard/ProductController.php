@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\Dashboard\Product\ProductStoreRequest;
 use App\Http\Requests\Dashboard\Product\ProductUpdateRequest;
+use App\Models\ProductSize;
 
 class ProductController extends Controller
 {
@@ -45,6 +46,26 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $data = $request->except('_token');
+
+        // if (isset($request->data_list)) {
+        //     $dataList = $request->data_list;
+        //     $product->sizes()->detach();
+        //     foreach ($dataList as $d) {
+        //         $product->sizes()->attach($d['size_id']);
+        //     }
+        // }
+        // // $sizes = [];
+        // // foreach ($dataList as $d) {
+        // //     $sizes = [
+        // //         $d['size_id'] => [
+        // //             'price' => $d['price'],
+        // //             'size_id' => $d['size_id'],
+        // //         ],
+        // //     ];
+        // // }
+        // // $product->sizes()->sync($sizes);
+        // // }
+
         if ($request->hasFile('image')) {
             if ($product->image != '') {
                 File::deleteDirectory(public_path('product/' . $product->id),);
@@ -83,5 +104,13 @@ class ProductController extends Controller
             return redirect()->route('product.index')->with('success', 'تم الحذف');
         }
         return redirect()->back()->with('error', 'يوجد خطأ ما');
+    }
+
+    public function editSizePrice($id, $size)
+    {
+        $productSize = ProductSize::where('size_id', $size)->first();
+        $sizes = Size::all();
+
+        return view('Dashboard.products.editsize', compact('productSize', 'sizes'));
     }
 }

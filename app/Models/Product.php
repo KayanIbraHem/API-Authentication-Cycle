@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable=[
+    protected $fillable = [
         'name',
         'maincat_id',
         'subcat_id',
@@ -17,19 +17,36 @@ class Product extends Model
         'image',
         'description'
     ];
+
     public function category()
     {
-        return $this->belongsTo(Category::class,'maincat_id','id');
+        return $this->belongsTo(Category::class, 'maincat_id', 'id');
     }
 
     public function sizes()
     {
-        return $this->belongsToMany(Size::class,'product_price')->withPivot('price');
+        return $this->hasMany(ProductSize::class, 'product_id', 'id');
     }
 
+    public function productSizes()
+    {
+        return $this->sizes()
+            ->join('sizes', 'product_price.size_id', '=', 'sizes.id')
+            ->select('sizes.name', 'product_price.price','product_price.id');
+    }
+
+    public function getSizeNamesAttribute()
+    {
+        return $this->productSizes;
+    }
+
+    // public function getSizeNamesAttribute()
+    // {
+    //     return $this->sizes->pluck('name')->implode(', ');
+    // }
     // public function getSize()
     // {
-    //     return $this->hasMany(Size::class);
+    //     return $this->belongsTo(Size::class,'size_id','id');
     // }
 
 }

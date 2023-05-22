@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\SubCategoryContoller;
+use App\Http\Controllers\Dashboard\ProductSizeController;
 use App\Http\Controllers\Dashboard\SubSubCategoryController;
 
 /*
@@ -66,6 +67,16 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
         Route::post('/{id}/update', [ProductController::class, 'update'])->name('product.update');
     });
+
+    Route::group(['prefix' => 'productSize'], function () {
+        // Route::get('/', [ProductSizeController::class, 'index'])->name('product.index');
+        // Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+        // Route::post('/create', [ProductController::class, 'store'])->name('product.store');
+        // Route::delete('/{id}/delete', [ProductController::class, 'delete'])->name('product.delete');
+        Route::get('/{id}/edit', [ProductSizeController::class, 'edit'])->name('product.size.edit');
+        Route::post('/{id}/update', [ProductSizeController::class, 'update'])->name('product.size.update');
+    });
+
 });
 
 Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin.login-view');

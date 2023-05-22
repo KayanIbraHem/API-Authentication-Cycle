@@ -72,7 +72,7 @@
 
                             <label for="sizes">Sizes:</label>
                             @foreach ($sizes as $size)
-                                <input type="checkbox" name="size_id[]" value="{{ $size->id }}">
+                                <input type="checkbox" name="sizes[]" value="{{ $size->id }}">
                                 {{ $size->name }}<br>
                             @endforeach
                         </div>
@@ -81,12 +81,12 @@
 
                             <label for="prices">Prices:</label>
                             @foreach ($sizes as $size)
-                                <input type="number" name="price[]" value="0" step="0.01" ><br>
+                                <input type="number" name="prices[]" value="0" step="0.01"><br>
                             @endforeach
                         </div>
                     </div> --}}
 
-                    {{-- <br> --}}
+                    <br>
                     <div class="card-body">
                         <div class="repeater">
                             <div data-repeater-list="data_list">
@@ -116,7 +116,6 @@
                                     <input class="button" data-repeater-create type="button" value="صف جديد" />
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="form-group">
