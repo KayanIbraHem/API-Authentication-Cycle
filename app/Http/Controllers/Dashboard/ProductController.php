@@ -54,15 +54,16 @@ class ProductController extends Controller
             $data['image'] = 'product/' . $product->id . '/' . UploadFiles::uploadImageWithFolder($request['image'], $product->id, 'product/');
         }
         $product->update($data);
-
         $dataList = $request->data_list;
-        // $sizeID=$request['size_id'];
-        if ($request['size_id']!='') {
+        // if ($dataList[1]['price'] != null) {
+        if ($dataList) {
             foreach ($dataList as $d) {
-                $product->sizes()->create(['product_id' => $product->id, 'size_id' => $d['size_id'], 'price' => $d['price']]);
+                if ($d['price'] != null) {
+                    $product->sizes()->create(['product_id' => $product->id, 'size_id' => $d['size_id'], 'price' => $d['price']]);
+                }
             }
         }
-
+        // }
         return redirect()->route('product.index');
     }
 

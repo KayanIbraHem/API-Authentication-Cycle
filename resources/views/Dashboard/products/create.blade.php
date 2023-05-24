@@ -109,6 +109,10 @@
                                                 class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col">
+                                        <input class="btn btn-danger " data-repeater-delete type="button"
+                                            value="حذف الصف" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mt-20">

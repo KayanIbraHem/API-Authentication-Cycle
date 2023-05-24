@@ -160,7 +160,7 @@
                                                 <label for="exampleInputEmail1" class="mr-sm-2">المقاس:</label>
                                                 <div class="box">
                                                     <select class="custom-select my-1 mr-sm-2" name="size_id">
-                                                        <option selected disabled> Select...</option>
+                                                        {{-- <option selected disabled> Select...</option> --}}
                                                         @foreach ($sizes as $size)
                                                             <option value="{{ $size->id }}">{{ $size->name }}
                                                             </option>
@@ -173,6 +173,10 @@
                                                 <input type="number" name='price' value="{{ old('price') }}"
                                                     class="form-control">
                                             </div>
+                                        </div>
+                                        <div class="col">
+                                            <input class="btn btn-danger " data-repeater-delete type="button"
+                                                value="حذف الصف" />
                                         </div>
                                     </div>
                                 </div>
