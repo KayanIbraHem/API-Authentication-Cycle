@@ -72,7 +72,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         // Route::get('/', [ProductSizeController::class, 'index'])->name('product.index');
         // Route::get('/create', [ProductController::class, 'create'])->name('product.create');
         // Route::post('/create', [ProductController::class, 'store'])->name('product.store');
-        // Route::delete('/{id}/delete', [ProductController::class, 'delete'])->name('product.delete');
+        Route::delete('/{productSize}/delete', [ProductSizeController::class, 'delete'])->name('product.size.delete');
         Route::get('/{id}/edit', [ProductSizeController::class, 'edit'])->name('product.size.edit');
         Route::post('/{id}/update', [ProductSizeController::class, 'update'])->name('product.size.update');
     });

@@ -44,28 +44,9 @@ class ProductController extends Controller
     }
     public function update(ProductUpdateRequest $request, $id)
     {
+        // dd($request);
         $product = Product::find($id);
-        $data = $request->except('_token');
-
-        // if (isset($request->data_list)) {
-        //     $dataList = $request->data_list;
-        //     $product->sizes()->detach();
-        //     foreach ($dataList as $d) {
-        //         $product->sizes()->attach($d['size_id']);
-        //     }
-        // }
-        // // $sizes = [];
-        // // foreach ($dataList as $d) {
-        // //     $sizes = [
-        // //         $d['size_id'] => [
-        // //             'price' => $d['price'],
-        // //             'size_id' => $d['size_id'],
-        // //         ],
-        // //     ];
-        // // }
-        // // $product->sizes()->sync($sizes);
-        // // }
-
+        $data = $request->except('_token', 'size_id', 'price');
         if ($request->hasFile('image')) {
             if ($product->image != '') {
                 File::deleteDirectory(public_path('product/' . $product->id),);
@@ -73,16 +54,30 @@ class ProductController extends Controller
             $data['image'] = 'product/' . $product->id . '/' . UploadFiles::uploadImageWithFolder($request['image'], $product->id, 'product/');
         }
         $product->update($data);
+
+        $dataList = $request->data_list;
+        // $sizeID=$request['size_id'];
+        if ($request['size_id']!='') {
+            foreach ($dataList as $d) {
+                $product->sizes()->create(['product_id' => $product->id, 'size_id' => $d['size_id'], 'price' => $d['price']]);
+            }
+        }
+
         return redirect()->route('product.index');
     }
+
     public function store(ProductStoreRequest $request)
     {
         // dd($request->all());
         $data = $request->except('_token', 'price', 'size_id');
         $product = Product::create($request->validated());
-        $dataList = $request->data_list;
-        foreach ($dataList as $d) {
-            $product->sizes()->attach($d['size_id'], ['price' => $d['price']]);
+        if ($request->data_list) {
+            $dataList = $request->data_list;
+            // $productSize=new ProductSize();
+            foreach ($dataList as $d) {
+                $product->sizes()->create(['product_id' => $product->id, 'size_id' => $d['size_id'], 'price' => $d['price']]);
+                // $product->sizes()->attach($d['size_id'], ['price' => $d['price']]);
+            }
         }
         if ($request->hasFile('image')) {
             if ($request->image != '') {
@@ -106,11 +101,11 @@ class ProductController extends Controller
         return redirect()->back()->with('error', 'يوجد خطأ ما');
     }
 
-    public function editSizePrice($id, $size)
-    {
-        $productSize = ProductSize::where('size_id', $size)->first();
-        $sizes = Size::all();
+    // public function editSizePrice($id, $size)
+    // {
+    //     $productSize = ProductSize::where('size_id', $size)->first();
+    //     $sizes = Size::all();
 
-        return view('Dashboard.products.editsize', compact('productSize', 'sizes'));
-    }
+    //     return view('Dashboard.products.editsize', compact('productSize', 'sizes'));
+    // }
 }

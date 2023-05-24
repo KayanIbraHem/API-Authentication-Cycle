@@ -57,8 +57,8 @@
                                     {{-- @endforeach --}}
                                     @foreach ($product->size_names as $item)
                                         <li>
-                                            المقاس: {{ $item->name }} - السعر: {{ $item->price }}
-                                        </li>
+                                             المقاس  :  {{ $item->name }}  -  السعر  :  {{ $item->price }}
+                                        </li> <br>
                                     @endforeach
                                 </td>
                                 <td><img src=" {{ asset($product->image) }}" width="100px" height="100px"></td>

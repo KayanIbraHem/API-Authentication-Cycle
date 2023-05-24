@@ -54,30 +54,29 @@
                         </thead>
                         <tbody>
                             <tr>
-                                @foreach ($product->size_names as $size)
-                                    <td>{{ $size->id }}</td>
-                                    <td>{{ $size->name }}</td>
-                                    <td>{{ $size->price }}</td>
+                                @foreach ($product->size_names as $data)
+                                    <td>{{ $data->id }}</td>
+                                    <td>{{ $data->name }}</td>
+                                    <td>{{ $data->price }}</td>
                                     <td>
-                                        {{-- @dd($size) --}}
                                         @can('product-edit')
                                             <a class="btn btn-info btn-sm edit"
-                                                href="{{ route('product.size.edit', ['id'=>$size->id]) }}" title="تعديل"><i
-                                                    class="fa fa-edit"></i></a>
+                                                href="{{ route('product.size.edit', ['id' => $data->id]) }}"
+                                                title="تعديل"><i class="fa fa-edit"></i></a>
                                         @endcan
                                         @can('product-delete')
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#product{{ $size->id }}" title="حذف">
+                                                data-target="#size{{ $data->id }}" title="حذف">
                                                 <i style="color: White" class="fa fa-trash"></i>
                                             </button>
                                         @endcan
                                     </td>
                             </tr>
-                            @endforeach
-                            <div class="modal fade" id="product{{ $product->id }}" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="size{{ $data->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
-                                    <form action="{{ route('product.delete', ['id' => $product->id]) }}" method="post">
+                                    <form action="{{ route('product.size.delete', ['productSize' => $data->id]) }}"
+                                        method="post">
                                         @csrf
                                         @method('DELETE')
                                         <div class="modal-content">
@@ -89,7 +88,6 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-
                                             <div class="modal-footer">
                                                 <div class="modal-footer">
                                                     <button type="button"
@@ -101,6 +99,7 @@
                                     </form>
                                 </div>
                             </div>
+                            @endforeach
                         </tbody>
                     </table>
                     <br>
@@ -134,7 +133,6 @@
                                     @endforeach
                                 @endforeach
                             </select>
-
                         </div>
                         <br>
                         <div class="form-group">
@@ -152,6 +150,39 @@
                             </select>
                         </div>
                         <br>
+                        <br>
+                        <div class="card-body">
+                            <div class="repeater">
+                                <div data-repeater-list="data_list">
+                                    <div data-repeater-item>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="exampleInputEmail1" class="mr-sm-2">المقاس:</label>
+                                                <div class="box">
+                                                    <select class="custom-select my-1 mr-sm-2" name="size_id">
+                                                        <option selected disabled> Select...</option>
+                                                        @foreach ($sizes as $size)
+                                                            <option value="{{ $size->id }}">{{ $size->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="exampleInputEmail1">السعر</label>
+                                                <input type="number" name='price' value="{{ old('price') }}"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-20">
+                                    <div class="col-12">
+                                        <input class="button" data-repeater-create type="button" value="صف جديد" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">وصف المنتج</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="12" name="description">{{ $product->description }}</textarea>
