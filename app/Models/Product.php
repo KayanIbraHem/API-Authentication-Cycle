@@ -32,18 +32,30 @@ class Product extends Model
     {
         return $this->sizes()
             ->join('sizes', 'product_price.size_id', '=', 'sizes.id')
-            ->select('sizes.name', 'product_price.price','product_price.id');
+            ->select('sizes.name', 'product_price.price', 'product_price.id');
     }
 
-    public function getSizeNamesAttribute()
+    public  function getSizeNamesAttribute()
     {
         return $this->productSizes;
     }
+
+    // public function cartItems()
+    // {
+    //     return $this->belongsToMany(Cart::class, 'cart_item_product_size');
+    // }
+
+    // public function getPriceForSize($size)
+    // {
+    //     $productSize = $this->sizes()->where('size_id', $size)->first();
+    //     return $productSize ? $productSize->price : null;
+    // }
 
     // public function getSizeNamesAttribute()
     // {
     //     return $this->sizes->pluck('name')->implode(', ');
     // }
+
     // public function getSize()
     // {
     //     return $this->belongsTo(Size::class,'size_id','id');

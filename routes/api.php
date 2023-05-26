@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\Authentication\ResetPasswordController;
 use App\Http\Controllers\Api\Authentication\AuthenticationController;
 use App\Http\Controllers\Api\Authentication\ForgotPasswordController;
 use App\Http\Controllers\Api\Authentication\VerifyPhoneNumberController;
-
+use App\Http\Controllers\Api\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,17 +26,19 @@ use App\Http\Controllers\Api\Authentication\VerifyPhoneNumberController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::middleware('auth:sanctum')->get('index', function () {
     return 'Success';
 });
 
-Route::get('products/', [ProductController::class, 'showAllProduct']);
-Route::get('products/search', [ProductController::class, 'searchByName']);
-Route::get('products/{category}', [ProductController::class, 'showProductByCategory']);
-
-Route::get('categories', [CategoryController::class, 'showAllCateogry']);
-Route::get('categories/{mainCategoryId}/subcategory', [CategoryController::class, 'subCategories']);
-Route::get('categories/{subCateoryId}/subsubcategory', [CategoryController::class, 'subSubCategory']);
+Route::group(['middleware' => ['api']], function () {
+    Route::get('products/', [ProductController::class, 'showAllProduct']);
+    Route::get('products/search', [ProductController::class, 'searchByName']);
+    Route::get('products/{category}', [ProductController::class, 'showProductByCategory']);
+    Route::get('categories', [CategoryController::class, 'showAllCateogry']);
+    Route::get('categories/{mainCategoryId}/subcategory', [CategoryController::class, 'subCategories']);
+    Route::get('categories/{subCateoryId}/subsubcategory', [CategoryController::class, 'subSubCategory']);
+});
 
 Route::post('auth/register', [AuthenticationController::class, 'register']);
 Route::post('auth/login', [AuthenticationController::class, 'login']);
@@ -46,3 +48,8 @@ Route::post('user/verfiy-phone-number', [VerifyPhoneNumberController::class, 've
 Route::post('user/forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 Route::post('user/reset-password', [ResetPasswordController::class, 'resetPassword']);
 Route::post('user/check-code', [CheckPasswordCode::class, 'checkCode']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('cart/add', [CartController::class, 'addToCart']);
+    Route::post('cart/update/{id}', [CartController::class, 'updateCart']);
+});
