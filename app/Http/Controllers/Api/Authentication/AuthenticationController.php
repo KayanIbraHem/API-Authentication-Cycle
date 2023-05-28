@@ -32,7 +32,7 @@ class AuthenticationController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $validated = $request->validated();
+        // $validated = $request->validated();
         $credentials = $request->only('email_or_phone', 'password');
         $field = filter_var($credentials['email_or_phone'], FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
         $user = User::where($field, $credentials['email_or_phone'])->first();
@@ -41,7 +41,7 @@ class AuthenticationController extends Controller
         //     $query->where('email', $validated['email_or_phone'])
         //         ->orWhere('phone', $validated['email_or_phone']);
         // })->first();
-        if (!$user || !Hash::check($validated['password'], $user->password)) {
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'error' => 'invalid data',
             ]);
