@@ -51,5 +51,7 @@ Route::post('user/check-code', [CheckPasswordCode::class, 'checkCode']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('cart/add', [CartController::class, 'addToCart']);
-    Route::post('cart/update/{id}', [CartController::class, 'updateCart']);
+    Route::post('cart/update', [CartController::class, 'updateCart']);
+    Route::post('cart/removeProduct', [CartController::class, 'removeProduct']);
+    Route::post('cart/clearCart', [CartController::class, 'clearCart']);
 });

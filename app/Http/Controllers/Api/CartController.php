@@ -52,12 +52,12 @@ class CartController extends Controller
         );
     }
 
-    public function updateCart($id, Request $request)
+    public function updateCart(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
-            // 'product_id' => 'required',
+            'product_id' => 'required',
             'size_id' => 'required',
-            // 'quantity' => 'required',
         ]);
         if ($validator->fails()) {
             foreach ((array)$validator->errors() as $error) {
@@ -70,15 +70,14 @@ class CartController extends Controller
         }
         $cart = Cart::where([
             'user_id' => auth()->id(),
-            'product_id' => $id,
+            'product_id' => $request->product_id,
             'size_id' => $request->size_id,
         ])
             ->first();
-        $quantity = $cart->quantity;
         if (!$cart) {
-            return response()->json(['error' => 'Cart not found'], 404);
+            return response()->json(['error' => 'Product not found'], 404);
         }
-
+        $quantity = $cart->quantity;
         if ($request->action == 'increase') {
             $quantity += 1;
         } else {
@@ -92,7 +91,83 @@ class CartController extends Controller
         );
     }
 
-    public function clearCart(Request $request)
+    public function removeProduct(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'required',
+            'size_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            foreach ((array)$validator->errors() as $error) {
+                return response()->json([
+                    'status' => 'faild',
+                    'message' => 'Please Recheck Your Details',
+                    'data' => $error
+                ]);
+            }
+        }
+        $cartItem = Cart::where([
+            'user_id' => auth()->id(),
+            'product_id' => $request->product_id,
+            'size_id' => $request->size_id,
+        ])
+            ->first();
+        if (!$cartItem) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+        $cartItem->delete();
+        return response()->json([
+            'status' => 'true',
+            'message' => 'prdouct removed',
+            'cart' => $cartItem,
+        ]);
+    }
+
+    public function clearCart()
+    {
+        $user = auth()->user();
+        $cartItems = Cart::where('user_id', $user->id)->get();
+        if ($cartItems->count() > 0) {
+            foreach ($cartItems as $cartItem) {
+                $cartItem->delete();
+            }
+            return response()->json([
+                'status' => 'true',
+                'message' => 'Cart removed',
+            ]);
+        }
+        return response()->json(['error' => 'Cart not found'], 404);
+        // dd($cartItems->count());
+        // if ($cartItems->count() < 1) {
+        //     return response()->json(['error' => 'Cart not found'], 404);
+        // }
+        // foreach ($cartItems as $cartItem) {
+        //     $cartItem->delete();
+        // }
+        // return response()->json([
+        //     'status' => 'true',
+        //     'message' => 'Cart removed',
+        // ]);
     }
 }
+
+        // DB::beginTransaction();
+
+        // try {
+        //     // Update user balance
+        //     $user = User::find($request->user_id);
+        //     $user->balance -= $request->amount;
+        //     $user->save();
+
+        //     // Create new transaction record
+        //     $transaction = new Transaction();
+        //     $transaction->user_id = $request->user_id;
+        //     $transaction->amount = $request->amount;
+        //     $transaction->save();
+
+        //     DB::commit();
+        //     return response()->json(['message' => 'Balance updated successfully'], 200);
+        // } catch (\Exception $e) {
+        //     DB::rollback();
+        //     return response()->json(['error' => 'Failed to update balance'], 500);
+        // }
