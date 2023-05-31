@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Cart;
-use App\Models\Product;
-use App\Models\ProductSize;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\CartItemResource;
 use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
@@ -17,6 +16,7 @@ class CartController extends Controller
             'product_id' => 'required',
             'size_id' => 'required',
             'quantity' => 'required',
+            'price' => 'required',
         ]);
         if ($validator->fails()) {
             foreach ((array)$validator->errors() as $error) {
@@ -31,7 +31,7 @@ class CartController extends Controller
         $cartItems = Cart::where([
             'user_id' => auth()->id(),
             'product_id' => $request->product_id,
-            'size_id' => $request->size_id,
+            'size_id' => $request->size_id
         ])
             ->first();
         if (!$cartItems) {
@@ -40,6 +40,7 @@ class CartController extends Controller
                 'product_id' => $request->product_id,
                 'size_id' => $request->size_id,
                 'quantity' => $request->quantity,
+                'price' => $request->price,
             ]);
             return response()->json(
                 ['cart' => $cart]
@@ -148,6 +149,27 @@ class CartController extends Controller
         //     'status' => 'true',
         //     'message' => 'Cart removed',
         // ]);
+    }
+
+    public function showCart()
+    {
+        $user = auth()->user();
+        $cartItems = Cart::where('user_id', $user->id)->get();
+        if ($cartItems->count() > 0) {
+            $totalPrice = 0;
+            foreach ($cartItems as $item) {
+                $totalPrice += $item->quantity * $item->price;
+            }
+            return response()->json([
+                'status' => 'true',
+                'cart' => CartItemResource::collection($cartItems),
+                'totalPrice' => $totalPrice,
+            ]);
+        }
+        return response()->json([
+            'status' => 'true',
+            'cartSay' => 'Fill in the cart to view the products',
+        ]);
     }
 }
 

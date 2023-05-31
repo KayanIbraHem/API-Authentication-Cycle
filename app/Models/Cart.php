@@ -9,7 +9,7 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'product_id', 'size_id', 'quantity'];
+    protected $fillable = ['user_id', 'product_id', 'size_id', 'quantity','price'];
 
     public function user()
     {
@@ -21,10 +21,10 @@ class Cart extends Model
         return $this->belongsTo(Product::class);
     }
 
-    // public function productSize()
-    // {
-    //     return $this->belongsTo(ProductSize::class);
-    // }
+    public function sizes()
+    {
+        return $this->belongsTo(Size::class,'size_id','id');
+    }
 
     // public function getProductSizePrice()
     // {
