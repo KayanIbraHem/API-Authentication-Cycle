@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('order_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->references('id')->on('orders')->cascadeOnDelete();
-            $table->enum('order_type', ['delivering', 'brach'])->default('delivering');
-            $table->string('user_name');
+            $table->string('order_type')->default('delivering');
+            $table->string('full_name');
             $table->string('city');
-            $table->char('full_adress');
+            $table->char('address');
             $table->timestamps();
         });
     }

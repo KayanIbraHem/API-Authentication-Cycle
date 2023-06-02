@@ -42,15 +42,19 @@ class CartController extends Controller
                 'quantity' => $request->quantity,
                 'price' => $request->price,
             ]);
-            return response()->json(
-                ['cart' => $cart]
-            );
+            return response()->json([
+                'status' => 'true',
+                'message' => 'product added to cart successfully',
+                'cart' => new CartItemResource($cart)
+            ]);
         }
         $cartItems->quantity += $request->quantity;
         $cartItems->update();
-        return response()->json(
-            ['cart' => $cartItems]
-        );
+        return response()->json([
+            'status' => 'true',
+            'message' => 'cart updated successfully',
+            'cart' => new CartItemResource($cartItems)
+        ]);
     }
 
     public function updateCart(Request $request)
@@ -137,18 +141,10 @@ class CartController extends Controller
                 'message' => 'Cart removed',
             ]);
         }
-        return response()->json(['error' => 'Cart not found'], 404);
-        // dd($cartItems->count());
-        // if ($cartItems->count() < 1) {
-        //     return response()->json(['error' => 'Cart not found'], 404);
-        // }
-        // foreach ($cartItems as $cartItem) {
-        //     $cartItem->delete();
-        // }
-        // return response()->json([
-        //     'status' => 'true',
-        //     'message' => 'Cart removed',
-        // ]);
+        return response()->json([
+            'status' => 'faild',
+            'message' => 'Cart not found'
+        ], 404);
     }
 
     public function showCart()
@@ -168,7 +164,7 @@ class CartController extends Controller
         }
         return response()->json([
             'status' => 'true',
-            'cartSay' => 'Fill in the cart to view the products',
+            'message' => 'Fill in the cart to view the products',
         ]);
     }
 }

@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->references('id')->on('orders')->cascadeOnDelete();
-            $table->foreignId('product_id')->references('id')->on('products')->nullOnDelete();
-            $table->foreignId('size_id')->references('id')->on('sizes')->nullOnDelete();
+            $table->foreignId('product_id')->nullable()->constrained('products')->nullOnDelete();
+            $table->foreignId('size_id')->nullable()->constrained('sizes')->nullOnDelete();
             $table->unsignedSmallInteger('quantity')->default(1);
-            $table->string('price');
             $table->float('total', 8, 2); // total for each product quantity
             $table->unique(['order_id', 'product_id', 'size_id']);
             $table->timestamps();
