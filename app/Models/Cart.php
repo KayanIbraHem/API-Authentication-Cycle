@@ -26,8 +26,4 @@ class Cart extends Model
         return $this->belongsTo(Size::class,'size_id','id');
     }
 
-    // public function getProductSizePrice()
-    // {
-    //     return $this->productSizes->price;
-    // }
 }

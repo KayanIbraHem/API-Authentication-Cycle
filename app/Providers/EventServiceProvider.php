@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\EmptyCart as EventsEmptyCart;
+use App\Listeners\EmptyCart;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +19,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        // 'empty.cart' => [
+        //     EmptyCart::class
+        // ],
+        EventsEmptyCart::class => [
+            EmptyCart::class
         ],
     ];
 

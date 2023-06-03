@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\EmptyCart;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItems;
@@ -26,7 +27,7 @@ class OrderController extends Controller
             foreach ((array)$validator->errors() as $error) {
                 return response()->json([
                     'status' => 'faild',
-                    'message' => 'Please Recheck Your Details',
+                    'message' => 'please recheck your details',
                     'data' => $error
                 ]);
             }
@@ -48,10 +49,9 @@ class OrderController extends Controller
                 'user_id' => $user->id,
                 'total' => $totalPrice,
                 'payment_method' => $request->payment_method,
-
             ]);
             foreach ($userCart as $item) {
-                $orderItems = OrderItems::create([
+                OrderItems::create([
                     'order_id' => $order->id,
                     'product_id' => $item->product_id,
                     'size_id' => $item->size_id,
@@ -66,12 +66,14 @@ class OrderController extends Controller
                 'city' => $request->city,
                 'address' => $request->address,
             ]);
+            DB::commit();
+            // event('empty.cart',$userCart);
+            // event(new EmptyCart($userCart));
             if ($userCart->count() > 0) {
                 foreach ($userCart as $cartItem) {
                     $cartItem->delete();
                 }
             }
-            DB::commit();
             return response()->json([
                 'status' => 'true',
                 'message' => 'order completed successfully!',
@@ -79,7 +81,10 @@ class OrderController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollback();
-            return  response()->json(['error' => 'failed to complete order'], 500);
+            return  response()->json([
+                'status' => 'faild',
+                'error' => 'failed to complete order',
+            ], 500);
         }
     }
 }

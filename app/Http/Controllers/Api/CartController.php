@@ -91,9 +91,11 @@ class CartController extends Controller
             }
         }
         $cart->update(['quantity' => $quantity]);
-        return response()->json(
-            ['cart' => $cart]
-        );
+        return response()->json([
+            'status' => 'true',
+            'message' => 'product quantity updated',
+            'cart' => new CartItemResource($cart)
+        ]);
     }
 
     public function removeProduct(Request $request)
