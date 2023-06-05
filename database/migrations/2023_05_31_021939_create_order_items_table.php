@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->nullable()->constrained('products')->nullOnDelete();
             $table->foreignId('size_id')->nullable()->constrained('sizes')->nullOnDelete();
             $table->unsignedSmallInteger('quantity')->default(1);
-            $table->float('total', 8, 2); // total for each product quantity
+            $table->float('total', 8, 2); // total for all product quantity
             $table->unique(['order_id', 'product_id', 'size_id']);
             $table->timestamps();
         });

@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\RoleController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\CouponController;
 use App\Http\Controllers\Dashboard\SubCategoryContoller;
 use App\Http\Controllers\Dashboard\ProductSizeController;
 use App\Http\Controllers\Dashboard\SubSubCategoryController;
@@ -27,6 +28,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
     Route::resource('roles', RoleController::class);
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
+    //Admins
     Route::group(['prefix' => 'admins'], function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin.index');
         Route::get('/create', [AdminController::class, 'create'])->name('admin.create');
@@ -35,6 +37,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::get('/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
         Route::post('/{id}/update', [AdminController::class, 'update'])->name('admin.update');
     });
+
+    //Categories
     Route::group(['prefix' => 'categories'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('category.index');
         Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
@@ -45,6 +49,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::get('get-subcategories/{id}', [CategoryController::class, 'getSubcategories'])->name('get-subcategories');
         Route::get('get-subsubcategories/{id}', [CategoryController::class, 'getSubsubcategories'])->name('get-subsubcategories');
 
+        //SubCategories
         Route::get('/subcategory', [SubCategoryContoller::class, 'index'])->name('category.subcategory.index');
         Route::get('subcategory/create', [SubCategoryContoller::class, 'create'])->name('category.subcategory.create');
         Route::post('subcategory/create', [SubCategoryContoller::class, 'store'])->name('category.subcategory.store');
@@ -52,6 +57,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::get('subcategory/{id}/edit', [SubCategoryContoller::class, 'edit'])->name('category.subcategory.edit');
         Route::post('subcategory/{id}/update', [SubCategoryContoller::class, 'update'])->name('category.subcategory.update');
 
+        //SubSubCategories
         Route::get('/subsubcategory', [SubSubCategoryController::class, 'index'])->name('category.subsub.index');
         Route::get('subsubcategory/create', [SubSubCategoryController::class, 'create'])->name('category.subsub.create');
         Route::post('subsubcategory/create', [SubSubCategoryController::class, 'store'])->name('category.subsub.store');
@@ -59,6 +65,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::get('subsubcategory/{id}/edit', [SubSubCategoryController::class, 'edit'])->name('category.subsub.edit');
         Route::post('subsubcategory/{id}/update', [SubSubCategoryController::class, 'update'])->name('category.subsub.update');
     });
+
+    //Products
     Route::group(['prefix' => 'products'], function () {
         Route::get('/', [ProductController::class, 'index'])->name('product.index');
         Route::get('/create', [ProductController::class, 'create'])->name('product.create');
@@ -68,17 +76,26 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::post('/{id}/update', [ProductController::class, 'update'])->name('product.update');
     });
 
+    //ProductSizes
     Route::group(['prefix' => 'productSize'], function () {
-        // Route::get('/', [ProductSizeController::class, 'index'])->name('product.index');
-        // Route::get('/create', [ProductController::class, 'create'])->name('product.create');
-        // Route::post('/create', [ProductController::class, 'store'])->name('product.store');
         Route::delete('/{productSize}/delete', [ProductSizeController::class, 'delete'])->name('product.size.delete');
         Route::get('/{id}/edit', [ProductSizeController::class, 'edit'])->name('product.size.edit');
         Route::post('/{id}/update', [ProductSizeController::class, 'update'])->name('product.size.update');
     });
 
+
+    //Coupons
+    Route::group(['prefix' => 'coupons'], function () {
+        Route::get('/', [CouponController::class, 'index'])->name('coupon.index');
+        Route::get('/create', [CouponController::class, 'create'])->name('coupon.create');
+        Route::post('/create', [CouponController::class, 'store'])->name('coupon.store');
+        Route::delete('/{id}/delete', [CouponController::class, 'delete'])->name('coupon.delete');
+        Route::get('/{id}/edit', [CouponController::class, 'edit'])->name('coupon.edit');
+        Route::post('/{id}/update', [CouponController::class, 'update'])->name('coupon.update');
+    });
 });
 
+//Admins[Login-Register]
 Route::get('/admin', [LoginController::class, 'showAdminLoginForm'])->name('admin.login-view');
 Route::post('/admin', [LoginController::class, 'adminLogin'])->name('admin.login');
 Route::get('/admin/register', [RegisterController::class, 'showAdminRegisterForm'])->name('admin.register-view');
