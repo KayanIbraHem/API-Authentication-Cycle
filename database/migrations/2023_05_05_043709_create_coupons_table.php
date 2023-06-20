@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->boolean('type')->default(0);
+            $table->string('type');
+            $table->boolean('type_of_use')->default(0);
             $table->integer('max_uses')->default(1);
-            $table->integer('discount');
-            $table->integer('max_discount');
+            $table->integer('value')->nullable();
+            $table->integer('precent_off')->nullable();
+            $table->integer('max_discount')->nullable();
             $table->integer('minimum_of_total');
             $table->integer('current_uses')->default(0);
             $table->date('start_date');

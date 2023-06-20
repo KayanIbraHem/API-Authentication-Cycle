@@ -83,12 +83,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::post('/{id}/update', [ProductSizeController::class, 'update'])->name('product.size.update');
     });
 
-
     //Coupons
     Route::group(['prefix' => 'coupons'], function () {
         Route::get('/', [CouponController::class, 'index'])->name('coupon.index');
         Route::get('/create', [CouponController::class, 'create'])->name('coupon.create');
         Route::post('/create', [CouponController::class, 'store'])->name('coupon.store');
+        Route::get('/coupon/{coupon}', [CouponController::class, 'show'])->name('coupon.show');
         Route::delete('/{id}/delete', [CouponController::class, 'delete'])->name('coupon.delete');
         Route::get('/{id}/edit', [CouponController::class, 'edit'])->name('coupon.edit');
         Route::post('/{id}/update', [CouponController::class, 'update'])->name('coupon.update');

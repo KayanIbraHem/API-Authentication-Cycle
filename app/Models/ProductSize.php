@@ -21,4 +21,9 @@ class ProductSize extends Model
     {
         return $this->belongsTo(Size::class);
     }
+    
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

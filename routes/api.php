@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\Authentication\CheckPasswordCode;
@@ -51,10 +52,11 @@ Route::post('user/reset-password', [ResetPasswordController::class, 'resetPasswo
 Route::post('user/check-code', [CheckPasswordCode::class, 'checkCode']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('cart/add', [CartController::class, 'addToCart']);
-    Route::post('cart/update', [CartController::class, 'updateCart']);
+    Route::post('cart/addOrUpdate', [CartController::class, 'addAOrUpdateToCart']);
     Route::post('cart/removeProduct', [CartController::class, 'removeProduct']);
     Route::post('cart/clearCart', [CartController::class, 'clearCart']);
-    Route::get('cart/usercart', [CartController::class, 'showCart']);
+    Route::post('cart/usercart', [CartController::class, 'showCart']);
+    Route::post('coupon/applyCoupon', [CouponController::class, 'applyPromoCode']);
+    Route::post('coupon/removeCoupon', [CouponController::class, 'removePromoCode']);
     Route::post('cart/makeOrder', [OrderController::class, 'makeOrder']);
 });

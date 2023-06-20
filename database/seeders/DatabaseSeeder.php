@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
     {
 
         // DB::table('categories')->delete();
-        Category::factory(20)->create();
+        // Category::factory(20)->create();
     }
 }

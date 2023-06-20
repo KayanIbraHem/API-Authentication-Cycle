@@ -17,10 +17,11 @@ class CouponsSeeder extends Seeder
         DB::table('coupons')->delete();
         Coupon::create([
             'code' => 'K123',
-            'type' => 1,
+            'type' => 'fixed',
+            'type_of_use' => 1,
             'max_uses' => 12,
-            'discount' => 10,
-            'max_discount' => 100,
+            'value' => 100,
+            // 'max_discount' => 100,
             'minimum_of_total' => 300,
             'current_uses' => 0,
             'start_date' => '2023-06-03',
@@ -28,9 +29,9 @@ class CouponsSeeder extends Seeder
         ]);
         Coupon::create([
             'code' => 'H456',
-            'type' => 0,
+            'type' => 'precent',
             'max_uses' => 1,
-            'discount' => 10,
+            'precent_off' => 10,
             'max_discount' => 100,
             'minimum_of_total' => 300,
             'current_uses' => 0,

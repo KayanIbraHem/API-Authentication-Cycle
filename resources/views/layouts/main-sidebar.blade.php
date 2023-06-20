@@ -111,6 +111,20 @@
                             {{-- <li> <a href="{{route('admin.index')}}">قائمة </a> </li> --}}
                         </ul>
                     </li>
+                    <!--coupons-->
+                    <li>
+                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#coupons-menu">
+                            <div class="pull-left"><i class="ti-wallet "></i><span class="right-nav-text">الكوبونات
+                                    والخصم</span>
+                            </div>
+                            <div class="pull-right"><i class="ti-plus"></i></div>
+                            <div class="clearfix"></div>
+                        </a>
+                        <ul id="coupons-menu" class="collapse" data-parent="#sidebarnav">
+                            <li> <a href="{{ route('coupon.create') }}">اضافة كوبون </a> </li>
+                            <li> <a href="{{ route('coupon.index') }}">قائمة الكوبونات</a> </li>
+                        </ul>
+                    </li>
                 @endcan
                 {{-- <!-- menu item chat-->
                 <li>
