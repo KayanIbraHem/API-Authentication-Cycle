@@ -28,8 +28,8 @@
     <div class="col-md-12 mb-30">
         <div class="card card-statistics h-100">
             <div class="card-body">
-                <a href="{{ route('category.create') }}" class="btn btn-primary " role="button"
-                    aria-pressed="true">قسم جديد</a><br><br>
+                <a href="{{ route('category.create') }}" class="btn btn-primary " role="button" aria-pressed="true">قسم
+                    جديد</a><br><br>
                 <table id="datatable" class="table  table-dark table-sm table-bordered p-0" data-page-length="50"
                     style="text-align: center">
                     <thead>
@@ -38,6 +38,7 @@
                             <th scope="col">الاسم</th>
                             <th scope="col">الصورة</th>
                             <th scope="col">القسم الرئيسي</th>
+                            <th scope="col">عدد الاقسام الفرعيه</th>
                             <th scope="col">العمليات</th>
                         </tr>
                     </thead>
@@ -48,6 +49,7 @@
                                 <td>{{ $category->name }}</td>
                                 <td><img src=" {{ asset($category->image) }}" width="100px" height="100px"></td>
                                 <td>{{ $category->parent ? $category->parent->name : 'قسم رئيسي' }}</td>
+                                <td>{{ $category->subcategories_count }}</td>
 
                                 <td>
                                     <a class="btn btn-info btn-sm edit"

@@ -10,6 +10,7 @@ class Category extends Model
     use HasFactory;
 
     protected $table = 'categories';
+
     protected $fillable = [
         'name',
         'image',
@@ -23,7 +24,7 @@ class Category extends Model
 
     public function subcategories()
     {
-        return $this->hasMany(Category::class, 'parent_id','id');
+        return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
     public function subSubCategories()
@@ -33,9 +34,6 @@ class Category extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'maincat_id');
     }
-
-
 }
-

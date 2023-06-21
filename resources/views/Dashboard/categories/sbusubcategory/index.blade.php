@@ -36,6 +36,7 @@
                             <th scope="col">الاسم</th>
                             <th scope="col">الصورة</th>
                             <th scope="col">القسم الرئيسي</th>
+                            <th scope="col">عدد المنتجات</th>
                             <th scope="col">العمليات</th>
                         </tr>
                     </thead>
@@ -49,6 +50,7 @@
                                         <td><img src=" {{ asset($sub->image) }}" width="100px" height="100px">
                                         </td>
                                         <td>{{ $subcategory->name}}</td>
+                                        <td>{{ $subcategories->products_count}}</td>
                                         <td>
                                             <a class="btn btn-info btn-sm edit"
                                                 href="{{ route('category.subsub.edit', ['id' => $sub->id]) }}" title="تعديل"><i

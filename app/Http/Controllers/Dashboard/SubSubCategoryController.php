@@ -14,7 +14,7 @@ class SubSubCategoryController extends Controller
 {
     public function index()
     {
-        $subsubcategories = Category::all();
+        $subsubcategories = Category::withCount('products')->get();
         return view('Dashboard.categories.sbusubcategory.index', compact('subsubcategories'));
     }
     public function create()

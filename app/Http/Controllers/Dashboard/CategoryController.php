@@ -16,7 +16,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $mainCategories = Category::whereNull('parent_id')->get();
+        $mainCategories = Category::withCount('subcategories')->whereNull('parent_id')->get();
         // $mainCategories = Category::all();
 
         return view('Dashboard.categories.maincategory.index', compact('mainCategories'));
