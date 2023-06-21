@@ -53,11 +53,16 @@ class Coupon extends Model
 
     public function isValid()
     {
+        if ($this->is_active == 1) {
+            return false;
+        }
+
         if ($this->current_uses >= $this->max_uses) {
             return false;
         }
 
         $now = Carbon::now();
+
         if ($this->start_date && $now->lt($this->start_date)) {
             return false;
         }

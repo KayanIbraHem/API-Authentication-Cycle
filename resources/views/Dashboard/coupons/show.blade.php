@@ -94,21 +94,20 @@
                                             <th scope="col">#</th>
                                             <th scope="col">اسم العميل</th>
                                             <th scope="col">الكوبون</th>
-                                            {{-- <th scope="col">الادوردر</th> --}}
+                                            <th scope="col">الادوردر</th>
                                             <th scope="col">التاريخ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        $i = 1;
-                                        ?>
                                         @foreach ($coupon->users as $co)
                                             <tr>
-                                                <td>{{ $i++ }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $co->name }}</td>
                                                 <td>{{ $coupon->code }}</td>
-                                                {{-- <td>{{ $co->userCart->id }}</td> --}}
-                                                <td>{{ $coupon->created_at->format('Y-m-d') }}</td> --}}
+                                                @foreach ($co->userCart as $order)
+                                                    <td>{{ $order->order_number }}</td>
+                                                @endforeach
+                                                <td>{{ $coupon->created_at->format('Y-m-d') }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -14,7 +14,8 @@
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb pt-0 pr-0 float-left float-sm-right ">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}" class="default-color">الرئيسية</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}" class="default-color">الرئيسية</a>
+                </li>
                 <li class="breadcrumb-item active">كوبونات الخصم</li>
             </ol>
         </div>
@@ -37,7 +38,8 @@
                             <th scope="col">#</th>
                             <th scope="col">الكود</th>
                             <th scope="col">نوع الخصم</th>
-                            <th scope="col">الحالة</th>
+                            <th scope="col">حاله الاستخدام</th>
+                            <th scope="col">حاله التفعيل</th>
                             <th scope="col">العمليات</th>
                         </tr>
                     </thead>
@@ -58,6 +60,13 @@
                                         <label class="badge badge-danger">غير متاح</label>
                                     @else
                                         <label class="badge badge-success">متاح</label>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($coupon->is_active == 0)
+                                        <label class="badge badge-success">مفعل</label>
+                                    @else
+                                        <label class="badge badge-danger">غير مفعل</label>
                                     @endif
                                 </td>
                                 <td>
