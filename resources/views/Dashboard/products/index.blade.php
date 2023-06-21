@@ -49,17 +49,17 @@
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->category->name }}</td>
                                 <td>
-                                    {{-- @foreach ($product->sizes as $size) --}}
-                                    {{-- <li> --}}
-                                    {{-- @dd($size) --}}
-                                    {{-- المقاس: {{ $product->size_names }} -> السعر: {{ $size->price }} --}}
-                                    {{-- </li><br> --}}
-                                    {{-- @endforeach --}}
-                                    @foreach ($product->size_names as $item)
+                                    @foreach ($product->sizes as $item)
+                                        <li>
+                                            المقاس : {{ $item->size->name }} - السعر : {{ $item->price }}
+                                        </li> <br>
+                                    @endforeach
+
+                                    {{-- @foreach ($product->size_names as $item) //Not used anymore 
                                         <li>
                                              المقاس  :  {{ $item->name }}  -  السعر  :  {{ $item->price }}
                                         </li> <br>
-                                    @endforeach
+                                    @endforeach --}}
                                 </td>
                                 <td><img src=" {{ asset($product->image) }}" width="100px" height="100px"></td>
                                 <td>{{ $product->description }}</td>

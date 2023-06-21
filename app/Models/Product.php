@@ -29,16 +29,16 @@ class Product extends Model
         return $this->hasMany(ProductSize::class, 'product_id', 'id');
     }
 
-    public function productSizes() //mistake use relation code will debug
-    {
-        return $this->sizes()
-            ->join('sizes', 'product_price.size_id', '=', 'sizes.id')
-            ->select('sizes.name', 'product_price.price', 'product_price.id');
-    }
+    // public function productSizes() //Not used anymore
+    // {
+    //     return $this->sizes()
+    //         ->join('sizes', 'product_price.size_id', '=', 'sizes.id')
+    //         ->select('sizes.name', 'product_price.price', 'product_price.id');
+    // }
 
-    public  function getSizeNamesAttribute()
-    {
-        return $this->productSizes;
-    }
+    // public  function getSizeNamesAttribute()
+    // {
+    //     return $this->productSizes;
+    // }
 
 }
