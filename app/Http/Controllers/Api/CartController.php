@@ -39,7 +39,7 @@ class CartController extends Controller
             'cart_id' => $cart->id
         ])->first();
         if ($cartItems) {
-            $cartItems->quantity += $request->quantity;
+            $cartItems->quantity = $request->quantity;
             $cartItems->total = $cartItems->quantity * $cartItems->price;
             $cartItems->update();
         } else {
