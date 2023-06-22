@@ -26,8 +26,7 @@ class CouponController extends Controller
                     'message' => 'Coupon expired.'
                 ], 400);
             }
-            $userCoupon = Cart::where('user_id', auth()->id())->where('coupon_id', $coupon->id)->first();
-            if ($userCoupon) {
+            if ($coupon->hasBeenUsedBy(auth()->user())) {
                 return response()->json([
                     'message' => 'تم استخدام الكوبون من قبل'
                 ], 404);
@@ -73,7 +72,7 @@ class CouponController extends Controller
         if ($coupon) {
             $total = $cart->cartTotal();
             $cart->coupon_id = null;
-            $cart->discount = null;
+            $cart->discount = 0;
             $cart->total = $total;
             $cart->save();
             $coupon->current_uses -= 1;

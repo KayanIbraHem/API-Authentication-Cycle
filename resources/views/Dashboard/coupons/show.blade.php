@@ -99,15 +99,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($coupon->users as $co)
+                                        @foreach ($coupon->carts as $cart)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $co->name }}</td>
-                                                <td>{{ $coupon->code }}</td>
-                                                @foreach ($co->userCart as $order)
-                                                    <td>{{ $order->order_number }}</td>
-                                                @endforeach
-                                                <td>{{ $coupon->created_at->format('Y-m-d') }}</td>
+                                                <td>{{ $cart->user->name }}</td>
+                                                <td>{{ $cart->coupon->code }}</td>
+                                                <td>{{ $cart->order_number }}</td>
+                                                <td>{{ $cart->created_at->format('Y-m-d') }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

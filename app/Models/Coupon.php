@@ -25,9 +25,9 @@ class Coupon extends Model
         'expiry_date',
     ];
 
-    public function cart()
+    public function carts()
     {
-        return $this->hasOne(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 
     public function users()
@@ -38,6 +38,11 @@ class Coupon extends Model
     public static function findByCode($code)
     {
         return self::where('code', $code)->first();
+    }
+
+    public function hasBeenUsedBy(User $user)
+    {
+        return $this->carts()->where('user_id', $user->id)->exists();
     }
 
     public function discount($total)

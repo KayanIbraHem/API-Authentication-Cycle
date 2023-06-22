@@ -114,7 +114,8 @@
                     <!--coupons-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#coupons-menu">
-                            <div class="pull-left"><i class="ti-wallet "></i><span class="right-nav-text">الكوبونات
+                            <div class="pull-left"><i class="fa fa-cc text-success" aria-hidden="true"></i><span
+                                    class="right-nav-text">الكوبونات
                                     والخصم</span>
                             </div>
                             <div class="pull-right"><i class="ti-plus"></i></div>
