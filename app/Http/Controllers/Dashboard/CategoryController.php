@@ -16,6 +16,7 @@ class CategoryController extends Controller
 
     public function index()
     {
+        // $mainCategories = Category::withCount('subcategories')->whereNull('parent_id')->paginate(1);
         $mainCategories = Category::withCount('subcategories')->whereNull('parent_id')->get();
         // $mainCategories = Category::all();
 

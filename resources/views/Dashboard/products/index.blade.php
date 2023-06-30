@@ -55,7 +55,7 @@
                                         </li> <br>
                                     @endforeach
 
-                                    {{-- @foreach ($product->size_names as $item) //Not used anymore 
+                                    {{-- @foreach ($product->size_names as $item) //Not used anymore
                                         <li>
                                              المقاس  :  {{ $item->name }}  -  السعر  :  {{ $item->price }}
                                         </li> <br>
@@ -77,8 +77,6 @@
                                     @endcan
 
                                 </td>
-
-
                             </tr>
                             <div class="modal fade" id="product{{ $product->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">

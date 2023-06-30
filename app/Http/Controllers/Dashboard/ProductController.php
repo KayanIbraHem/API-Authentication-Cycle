@@ -24,7 +24,12 @@ class ProductController extends Controller
     }
     public function index()
     {
-        $products = Product::with(['sizes', 'category'])->get();
+        $request = request();
+        $query = Product::query();
+        if ($name = $request->query('name')) {
+            $query->where('name', 'LIKE', "%{$name}%");
+        }
+        $products = $query->with(['sizes', 'category'])->get();
         return view('Dashboard.products.index', compact('products'));
     }
 

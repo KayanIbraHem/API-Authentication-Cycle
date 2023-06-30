@@ -54,28 +54,28 @@
                         </thead>
                         <tbody>
                             <tr>
-                                @foreach ($product->size_names as $data)
-                                    <td>{{ $data->id }}</td>
-                                    <td>{{ $data->name }}</td>
-                                    <td>{{ $data->price }}</td>
+                                @foreach ($product->sizes as $item)
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->size->name }}</td>
+                                    <td>{{ $item->price }}</td>
                                     <td>
                                         @can('product-edit')
                                             <a class="btn btn-info btn-sm edit"
-                                                href="{{ route('product.size.edit', ['id' => $data->id]) }}"
+                                                href="{{ route('product.size.edit', ['id' => $item->id]) }}"
                                                 title="تعديل"><i class="fa fa-edit"></i></a>
                                         @endcan
                                         @can('product-delete')
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                data-target="#size{{ $data->id }}" title="حذف">
+                                                data-target="#size{{ $item->id }}" title="حذف">
                                                 <i style="color: White" class="fa fa-trash"></i>
                                             </button>
                                         @endcan
                                     </td>
                             </tr>
-                            <div class="modal fade" id="size{{ $data->id }}" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="size{{ $item->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
-                                    <form action="{{ route('product.size.delete', ['productSize' => $data->id]) }}"
+                                    <form action="{{ route('product.size.delete', ['productSize' => $item->id]) }}"
                                         method="post">
                                         @csrf
                                         @method('DELETE')

@@ -92,6 +92,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{-- {{$mainCategories->links()}} --}}
             </div>
         </div>
     </div>

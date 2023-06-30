@@ -105,7 +105,7 @@
                                                 <td>{{ $cart->user->name }}</td>
                                                 <td>{{ $cart->coupon->code }}</td>
                                                 <td>{{ $cart->order_number }}</td>
-                                                <td>{{ $cart->created_at->format('Y-m-d') }}</td>
+                                                <td>{{ $cart->updated_at->format('Y-m-d') }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
