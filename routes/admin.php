@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\CouponController;
+use App\Http\Controllers\Dashboard\OrderContorller;
 use App\Http\Controllers\Dashboard\SubCategoryContoller;
 use App\Http\Controllers\Dashboard\ProductSizeController;
 use App\Http\Controllers\Dashboard\SubSubCategoryController;
@@ -92,6 +93,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:admin'], function (
         Route::delete('/{id}/delete', [CouponController::class, 'delete'])->name('coupon.delete');
         Route::get('/{id}/edit', [CouponController::class, 'edit'])->name('coupon.edit');
         Route::post('/{id}/update', [CouponController::class, 'update'])->name('coupon.update');
+    });
+
+    //Orders
+    Route::group(['prefix' => 'orders'], function () {
+        Route::get('/', [OrderContorller::class, 'index'])->name('order.index');
     });
 });
 

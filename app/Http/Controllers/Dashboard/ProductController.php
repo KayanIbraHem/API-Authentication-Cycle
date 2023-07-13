@@ -29,7 +29,7 @@ class ProductController extends Controller
         if ($name = $request->query('name')) {
             $query->where('name', 'LIKE', "%{$name}%");
         }
-        $products = $query->with(['sizes', 'category'])->get();
+        $products = $query->with(['sizes', 'category'])->paginate(5);
         return view('Dashboard.products.index', compact('products'));
     }
 

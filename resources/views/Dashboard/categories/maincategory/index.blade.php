@@ -92,7 +92,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{-- {{$mainCategories->links()}} --}}
+                {{-- {{ $mainCategories->withQueryString()->links() }} --}}
             </div>
         </div>
     </div>

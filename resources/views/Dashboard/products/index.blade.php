@@ -109,6 +109,8 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $products->withQueryString()->links() }}
+
             </div>
         </div>
     </div>
