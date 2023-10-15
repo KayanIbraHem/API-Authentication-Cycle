@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
 {
-    use HasFactory;
+    use Notifiable, HasFactory;
 
     protected $table = 'carts';
 

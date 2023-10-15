@@ -55,7 +55,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Coupon::class, 'carts', 'user_id', 'coupon_id');
     }
-    
+
     public function cart()
     {
         return $this->userCart()->where('status', '0')->get();

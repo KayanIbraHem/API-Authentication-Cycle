@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\EmptyCart as EventsEmptyCart;
+use App\Events\OrderCreated as EventsOrderCreated;
 use App\Listeners\EmptyCart;
+use App\Listeners\OrderCreated as ListenersOrderCreated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -25,6 +27,9 @@ class EventServiceProvider extends ServiceProvider
         // ],
         EventsEmptyCart::class => [
             EmptyCart::class
+        ],
+        EventsOrderCreated::class => [
+            ListenersOrderCreated::class,
         ],
     ];
 
